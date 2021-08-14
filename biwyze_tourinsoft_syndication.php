@@ -9,12 +9,7 @@ Author URI: https://biwyze.fr
 License: propriétaire
 */
 
-require 'vendor/autoload.php';
+require_once(__DIR__ . '/vendor/autoload.php');
 
-class BiwyzeTourinsoftSyndication {
-    const VERSION = "1.0.0";
-    const PREFIX = "biwyze_ts";
-    const PLUGIN_NAME = 'Biwyze Tourinsoft Syndication';
-
-    public function __construct() {}
-}
+$plugin = new \BiwyzeTourinsoft\BiwyzeTourinsoftSyndication();
+$plugin->boot();
