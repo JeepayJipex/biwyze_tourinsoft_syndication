@@ -1,0 +1,17 @@
+{
+    "name": "jeepayjipex/biwyze_tourinsoft_syndication",
+    "description": "Plugin to synchronise offers on tourinsoft with your wordpress website",
+    "type": "project",
+    "license": "proprietaire",
+    "authors": [
+        {
+            "name": "Jean Mariette",
+            "email": "jean.mariette@biwyze.fr"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {"App\\": "src/"},
+        "classmap": ["biwyze_tousinsoft_syndication.php"]
+    }
+}
