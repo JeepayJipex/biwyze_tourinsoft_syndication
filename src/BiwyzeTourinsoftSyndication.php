@@ -4,6 +4,7 @@ namespace BiwyzeTourinsoft;
 
 use BiwyzeTourinsoft\Core\Admin;
 use BiwyzeTourinsoft\Core\Install;
+use BiwyzeTourinsoft\Core\Loader;
 
 class BiwyzeTourinsoftSyndication
 {
@@ -19,6 +20,8 @@ class BiwyzeTourinsoftSyndication
     public function boot() {
         add_action( 'plugins_loaded', [$this, 'checkUpdate']);
         add_action('admin_menu', [Admin::class, 'createAdminPages']);
+
+        (new Loader())->load();
     }
 
     public function checkUpdate () {
