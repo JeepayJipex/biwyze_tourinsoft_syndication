@@ -12,6 +12,9 @@ class Api
                 [
                     'methods' => ['POST'],
                     'callback' => [SyndicationController::class, 'store'],
+                    'permission_callback' => function () {
+                        return current_user_can( 'manage_options' );
+                    }
                 ],
                 [
                     'methods' => ['GET'],
@@ -31,7 +34,7 @@ class Api
                     ],
                     'callback' => [SyndicationController::class, 'update'],
                     'permission_callback' => function ($request) {
-                        return is_user_logged_in();
+                        return current_user_can( 'manage_options' );
                     }
                 ],
                 [
@@ -45,7 +48,7 @@ class Api
                     ],
                     'callback' => [SyndicationController::class, 'delete'],
                     'permission_callback' => function ($request) {
-                        return is_user_logged_in();
+                        return current_user_can( 'manage_options' );
                     }
                 ],
                 [

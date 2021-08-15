@@ -17,6 +17,10 @@ class BiwyzeTourinsoftSyndication
 
     const PLUGIN_DIR = WP_PLUGIN_DIR . "/biwyze_tourinsoft_syndication";
 
+    const TOURINSOFT_URL = 'https://wcf.tourinsoft.com';
+    const CDT_OPTION = 'biwyze_tourinsoft_cdt';
+    const TOURINSOFT_API_VERSION_OPTION = 'biwyze_tourinsoft_api_version';
+
     public function boot() {
         add_action( 'plugins_loaded', [$this, 'checkUpdate']);
         add_action('admin_menu', [Admin::class, 'createAdminPages']);
