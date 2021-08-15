@@ -4,11 +4,11 @@ namespace BiwyzeTourinsoft\Handlers;
 
 class SyndicationFieldTransformer
 {
-    public function handleFieldTransform(string $fieldKey, $fieldValue)
+    public static function handleFieldTransform(string $fieldKey, $fieldValue)
     {
-        $fieldValue = (new SyndicationFieldReader($fieldKey, $fieldValue))->fieldValueArray;
+        $fieldValue = SyndicationFieldReader::separateField($fieldValue);
 
-        if(!method_exists($this, $fieldKey)) {
+        if(!method_exists(SyndicationFieldReader::class, strtolower($fieldKey))) {
             $transformedField =  array_map(function($value) {
                 return implode('\n', $value);
             }, $fieldValue);
@@ -18,7 +18,7 @@ class SyndicationFieldTransformer
             }
             return $transformedField;
         }
-
-        return $this->{$fieldKey}($fieldValue);
+        $method = strtolower($fieldKey);
+        return self::{$method}($fieldValue);
     }
 }

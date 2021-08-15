@@ -7,23 +7,13 @@ class SyndicationFieldReader
     /**
      * @var string
      */
-    private $fieldKey;
-    private $fieldValue;
-    public $fieldValueArray;
 
-    public function __construct(string $fieldKey, $fieldValue)
+    public static function separateField($fieldValue): array
     {
-        $this->fieldKey = $fieldKey;
-        $this->fieldValue = $fieldValue;
-        $this->fieldValueArray = $this->separateField($this->fieldValue);
+        return self::separateInnerValues(self::separateOccurences($fieldValue));
     }
 
-    private function separateField($fieldValue): array
-    {
-        return $this->separateInnerValues($this->separateOccurences($fieldValue));
-    }
-
-    private function separateOccurences(string $fieldValue): array
+    public static function separateOccurences(string $fieldValue): array
     {
         $values =  explode('#', $fieldValue);
         return array_filter($values, function ($value) {
@@ -31,7 +21,7 @@ class SyndicationFieldReader
         });
     }
 
-    private function separateInnerValues(array $values): array
+    public static function separateInnerValues(array $values): array
     {
         return array_map(function ($value) {
             $arrayValue = explode('|', $value);
