@@ -13,7 +13,6 @@ class Install
     public function start()
     {
         $this->createTables();
-        add_action( 'plugins_loaded', [$this, 'checkDbUpdate']);
     }
 
 
@@ -43,7 +42,7 @@ class Install
     /**
      * Updates database if plugin is updated
      */
-    private function checkDbUpdate()
+    public function checkDbUpdate()
     {
         $currentDbVersion = get_option(BiwyzeTourinsoftSyndication::PREFIX . 'db_version');
         if ($currentDbVersion !== BiwyzeTourinsoftSyndication::DB_VERSION) {

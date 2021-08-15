@@ -15,18 +15,10 @@ class BiwyzeTourinsoftSyndication
 
 
     public function boot() {
-        register_activation_hook(__FILE__, 'install');
-        register_deactivation_hook(__FILE__, 'uninstall');
+        add_action( 'plugins_loaded', [$this, 'checkUpdate']);
     }
 
-    public function install()
-    {
-        $install = new Install();
-        $install->start();
-    }
-
-    public function uninstall()
-    {
-
+    public function checkUpdate () {
+        (new Install())->checkDBUpdate();
     }
 }
