@@ -2,6 +2,7 @@
 
 namespace BiwyzeTourinsoft;
 
+use BiwyzeTourinsoft\Core\Admin;
 use BiwyzeTourinsoft\Core\Install;
 
 class BiwyzeTourinsoftSyndication
@@ -13,9 +14,11 @@ class BiwyzeTourinsoftSyndication
 
     const SYNDICATIONS_TABLE = 'tourinsoft_syndications';
 
+    const PLUGIN_DIR = WP_PLUGIN_DIR . "/biwyze_tourinsoft_syndication";
 
     public function boot() {
         add_action( 'plugins_loaded', [$this, 'checkUpdate']);
+        add_action('admin_menu', [Admin::class, 'createAdminPages']);
     }
 
     public function checkUpdate () {
