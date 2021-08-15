@@ -18,6 +18,7 @@ class Api
                 ],
                 [
                     'methods' => ['GET'],
+                    'permission_callback' => function ($request) {return true;},
                     'callback' => [SyndicationController::class, 'index']
                 ],
             ]);
@@ -60,6 +61,7 @@ class Api
                                 return is_numeric($param);
                             }]
                     ],
+                    'permission_callback' => function ($request) {return true;},
                     'callback' => [SyndicationController::class, 'show']
                 ],
             ]);
