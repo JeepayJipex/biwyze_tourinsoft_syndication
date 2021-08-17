@@ -18,6 +18,7 @@ class Tables
 	`name` VARCHAR(255) NOT NULL,
 	`category_id` INT NOT NULL,
 	`syndic_id` VARCHAR(255) NOT NULL,
+	`associated_post_type` VARCHAR(255) NOT NULL,
 	`created_at` TIMESTAMP NOT NULL,
 	`synced_at` TIMESTAMP NOT NULL,
 	`updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

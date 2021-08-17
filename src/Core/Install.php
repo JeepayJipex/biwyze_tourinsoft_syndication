@@ -29,8 +29,7 @@ class Install
             global $wpdb;
             $wpdb->show_errors();
 
-            foreach ($tables as $table) {
-                $sql = $table;
+            foreach ($tables as $sql) {
                 require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
                 dbDelta($sql);
             }

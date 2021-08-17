@@ -21,7 +21,14 @@
                 </template>
             </select>
         </div>
-
+        <div class="mb-3">
+            <label for="associated_post_type" class="form-label">Type de contenu à associer</label>
+            <select id="associated_post_type" class="form-select" x-model="newSyndication.associated_post_type">
+                <template x-for="type in postTypes">
+                    <option x-text="type.name" :value="type.slug"></option>
+                </template>
+            </select>
+        </div>
         <button @click.prevent="createSyndication" class="btn btn-primary mt-3">Ajouter</button>
     </form>
 
@@ -61,6 +68,14 @@
                                     x-model="updatedSyndication.category_id">
                                 <template x-for="category in categories">
                                     <option x-text="category.name" :value="category.id"></option>
+                                </template>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="associated_post_type" class="form-label">Type de contenu à associer</label>
+                            <select id="associated_post_type" class="form-select" x-model="updatedSyndication.associated_post_type">
+                                <template x-for="type in postTypes">
+                                    <option x-text="type.name" :value="type.slug"></option>
                                 </template>
                             </select>
                         </div>

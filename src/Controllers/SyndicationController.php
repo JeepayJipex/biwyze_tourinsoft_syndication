@@ -11,9 +11,7 @@ class SyndicationController
     {
         try {
             global $wpdb;
-            $results = $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE, ARRAY_A);
-
-            return $results;
+            return $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE, ARRAY_A);
         } catch (\Exception $exception) {
             return self::handleError($exception->getMessage());
         }

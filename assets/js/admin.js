@@ -21,15 +21,20 @@ document.addEventListener('alpine:init', () => {
       Alpine.store('main').toggleLoading()
       this.syndications = await sendRequest('tourinsoft/v1/syndication') || []
       this.categories = await sendRequest('wp/v2/categories') || []
+      this.orderedPostTypes = await sendRequest('wp/v2/types') || []
       this.newSyndication.category_id = this.categories[0]?.id || ''
+      this.newSyndication.associated_post_type = this.postTypes[0]?.slug || ''
       this.categories.forEach(cat => {
         this.orderedCategories[cat.id] = cat
       })
+      this.postTypes = Object.values(this.orderedPostTypes)
       Alpine.store('main').toggleLoading()
     },
     syndications: [],
     categories: [],
     orderedCategories: [],
+    postTypes: [],
+    orderedPostTypes: [],
     add: false,
     toggleAdd () {
       this.add = !this.add
@@ -37,14 +42,23 @@ document.addEventListener('alpine:init', () => {
     newSyndication: {
       name: '',
       category_id: '',
-      syndic_id: ''
+      syndic_id: '',
+      associated_post_type: '',
     },
     updatedSyndication: {
       name: '',
       category_id: '',
-      syndic_id: ''
+      syndic_id: '',
+      associated_post_type: ''
     },
-
+    resetNewSyndication() {
+      this.newSyndication = {
+        name: '',
+        category_id: this.categories[0].id,
+        syndic_id: '',
+        associated_post_type: this.postTypes[0].slug
+      }
+    },
     getCategoryName (id) {
       return this.orderedCategories[id]?.name
     },
@@ -54,7 +68,8 @@ document.addEventListener('alpine:init', () => {
       this.updatedSyndication = {
         name: syndication.name,
         category_id: syndication.category_id,
-        syndic_id: syndication.syndic_id
+        syndic_id: syndication.syndic_id,
+        associated_post_type: syndication.associated_post_type
       }
       this.updating = true
       this.updatingId = syndication.id
@@ -63,8 +78,9 @@ document.addEventListener('alpine:init', () => {
     cancelSyndicationUpdate () {
       this.updatedSyndication = {
         name: '',
-        category_id: '',
-        syndic_id: ''
+        category_id: this.categories[0].id,
+        syndic_id: '',
+        associated_post_type: this.postTypes[0].slug
       }
       this.updating = false
       this.updatingId = null
@@ -89,11 +105,7 @@ document.addEventListener('alpine:init', () => {
       if (addedSyndic) {
         this.syndications = [...this.syndications, addedSyndic]
       }
-      this.newSyndication = {
-        name: '',
-        category_id: '',
-        syndic_id: ''
-      }
+      this.resetNewSyndication()
       Alpine.store('main').toggleLoading()
     },
     async deleteSyndication (id) {
