@@ -4,14 +4,14 @@ namespace BiwyzeTourinsoft\Controllers;
 
 use BiwyzeTourinsoft\BiwyzeTourinsoftSyndication;
 use BiwyzeTourinsoft\Handlers\SyndicationReader;
+use BiwyzeTourinsoft\Repositories\SyndicationRepository;
 
-class SyndicationController
+class SyndicationController extends \WP_REST_Controller
 {
     public static function index()
     {
         try {
-            global $wpdb;
-            return $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE, ARRAY_A);
+            return (new SyndicationRepository())->all();
         } catch (\Exception $exception) {
             return self::handleError($exception->getMessage());
         }
@@ -19,6 +19,23 @@ class SyndicationController
 
     public static function show(\WP_REST_Request $request)
     {
+        try {
+            $id = $request->get_param('id');
+            global $wpdb;
+            $syndication = (new SyndicationRepository())->get($id);
+            $reader = (new SyndicationReader($syndication->syndic_id, $syndication->name));
+
+            return [
+                'syndication' => $syndication,
+                'content' => json_encode($reader->getRawData()),
+                'offers' => [
+                    'raw' => $reader->getOffers(),
+                    'parsed' => $reader->getParsedOffers()
+                ]
+                          ];
+        } catch (\Exception $exception) {
+            return self::handleError($exception->getMessage());
+        }
     }
 
     public static function store(\WP_REST_Request $request)
@@ -27,17 +44,10 @@ class SyndicationController
         try {
             $params = $request->get_param('syndication');
             $params = json_decode(json_encode($params), true);
-            global $wpdb;
-
-            $wpdb->insert($wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE, array_merge($params, [
-                'created_at' => date('Y-m-d H:i:s')
-            ]));
 
             (new SyndicationReader($params['syndic_id'], $params['name']))->readSyndicData();
 
-            $id = $wpdb->insert_id;
-
-            return $wpdb->get_row('SELECT * FROM ' . $wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE . ' WHERE id = ' . $id . ';');
+            return (new SyndicationRepository())->store($params);
         } catch (\Exception $e) {
             return self::handleError($e->getMessage(), 500);
         }
@@ -49,12 +59,7 @@ class SyndicationController
         try {
             $params = $request->get_param('syndication');
             $params = json_decode(json_encode($params), true);
-            global $wpdb;
-
-            $params['updated_at'] = date('Y-m-d H:i:s');
-            $wpdb->update($wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE, $params, ['id' => $request->get_param('id')]);
-            (new SyndicationReader($params['syndic_id'], $params['name']))->readSyndicData();
-            return $wpdb->get_row('SELECT * FROM ' . $wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE . ' WHERE id = ' . $request->get_param('id') . ';');
+            return (new SyndicationRepository())->update($request->get_param('id'), $params);
         } catch (\Exception $e) {
             return self::handleError($e->getMessage(), 500);
         }
@@ -63,10 +68,7 @@ class SyndicationController
     public static function delete(\WP_REST_Request $request)
     {
         try {
-            global $wpdb;
-
-            $wpdb->delete($wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE, ['id' => $request->get_param('id')]);
-            return ["success" => true];
+            return ["success" => (new SyndicationRepository())->delete($request->get_param('id'))];
         } catch (\Exception $exception) {
             return self::handleError($exception->getMessage());
         }

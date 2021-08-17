@@ -30,7 +30,7 @@ class SyndicationReader
     /**
      * @var mixed
      */
-    private $data;
+    public $data;
 
     public function __construct(string $id, string $syndicationName)
     {
@@ -40,15 +40,35 @@ class SyndicationReader
         $this->syndicationName = $syndicationName;
     }
 
+    public function getRawData() {
+        return get_transient('syndic_data_' . esc_sql($this->id) . '_' . esc_sql($this->syndicationName)) ?? $this->getJsonContent();
+    }
     public function readSyndicData () {
         $this->data = $this->getJsonContent();
-        set_transient('syndic_data_' . esc_sql($this->id) . '_' . esc_sql($this->syndicationName), $this->data, 0);
+        set_transient('syndic_data_' . esc_sql($this->id) . '_' . esc_sql($this->syndicationName), $this->data, 60 * 60 * 24);
         return $this->data;
     }
 
     public function getOffers() {
         $data = get_transient('syndic_data_' . esc_sql($this->id) . '_' . esc_sql($this->syndicationName)) ?? $this->readSyndicData();
         return $data[$this->versionCorrespondances[$this->version] ?? 'd'];
+    }
+
+    public function getParsedOffers(): array
+    {
+        $offers = [];
+        foreach($this->getOffers() as $offer) {
+            $parsed = [];
+            foreach($offer as $field => $value) {
+                if(!$value) {
+                    $parsed[$field] = null;
+                    continue;
+                }
+                $parsed[$field] = SyndicationFieldTransformer::handleFieldTransform($field, $value);
+            }
+            $offers[] = $parsed;
+        }
+        return $offers;
     }
 
     private function getJsonContent() {

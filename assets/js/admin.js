@@ -123,6 +123,10 @@ document.addEventListener('alpine:init', () => {
         }
       }
       Alpine.store('main').toggleLoading()
+    },
+    currentSyndication: {},
+    async getCurrentSyndication(id) {
+      this.currentSyndication = await sendRequest('tourinsoft/v1/syndication/' + id)
     }
   }))
 })
