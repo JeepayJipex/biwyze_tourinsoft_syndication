@@ -1,3 +1,4 @@
+
 document.addEventListener('alpine:init', () => {
 
   Alpine.store('main', {
@@ -32,7 +33,7 @@ document.addEventListener('alpine:init', () => {
     },
     syndications: [],
     categories: [],
-    orderedCategories: [],
+    orderedCategories: {},
     postTypes: [],
     orderedPostTypes: [],
     add: false,
@@ -62,6 +63,9 @@ document.addEventListener('alpine:init', () => {
     getCategoryName (id) {
       return this.orderedCategories[id]?.name
     },
+    getPostTypeName (slug) {
+      return this.orderedPostTypes[slug]?.name
+    },
     updating: false,
     updatingId: null,
     startSyndicationUpdate (syndication) {
@@ -73,7 +77,6 @@ document.addEventListener('alpine:init', () => {
       }
       this.updating = true
       this.updatingId = syndication.id
-      location.href = "#update-syndication";
     },
     cancelSyndicationUpdate () {
       this.updatedSyndication = {
@@ -87,6 +90,7 @@ document.addEventListener('alpine:init', () => {
     },
     async updateSyndication () {
       Alpine.store('main').toggleLoading()
+      const myModal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'))
       const updatedSyndic = await sendRequest('tourinsoft/v1/syndication/' + this.updatingId, 'PUT', {syndication: this.updatedSyndication})
       if (updatedSyndic) {
         this.syndications = this.syndications.map(s => {
@@ -95,6 +99,7 @@ document.addEventListener('alpine:init', () => {
           }
           return s
         })
+        myModal.hide()
       }
       this.cancelSyndicationUpdate()
       Alpine.store('main').toggleLoading()
