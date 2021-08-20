@@ -127,6 +127,9 @@ document.addEventListener('alpine:init', () => {
     currentSyndication: {},
     async getCurrentSyndication(id) {
       this.currentSyndication = await sendRequest('tourinsoft/v1/syndication/' + id)
+    },
+    getCurrentSyndicationFields () {
+        return Object.keys(this.currentSyndication?.offers?.raw[0] || [])
     }
   }))
 })
