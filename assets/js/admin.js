@@ -129,10 +129,10 @@ document.addEventListener('alpine:init', () => {
       this.currentSyndication = await sendRequest('tourinsoft/v1/syndication/' + id)
     },
     getCurrentSyndicationFields () {
-        return Object.keys(this.currentSyndication?.offers?.raw[0] || [])
+        return Object.keys(this.currentSyndication?.offers?.raw[0] || []).sort(sortStrings)
     },
     getCurrentSyndicationOffers (type = 'raw') {
-      return this.currentSyndication?.offers && type in this.currentSyndication?.offers ? this.currentSyndication?.offers[type] : []
+      return this.currentSyndication?.offers && type in this.currentSyndication?.offers ? this.currentSyndication?.offers[type].sort((a,b) => sortStrings(a.SyndicObjectName, b.SyndicObjectName)) : []
     },
     getCurrentSyndicationName () {
       return this.currentSyndication?.syndication?.name || ''
@@ -140,6 +140,9 @@ document.addEventListener('alpine:init', () => {
   }))
 })
 
+function sortStrings(a, b) {
+  return a.localeCompare(b)
+}
 
 async function sendRequest (url, method = 'GET', body = {}, headers = {}) {
   const baseHeaders = {
