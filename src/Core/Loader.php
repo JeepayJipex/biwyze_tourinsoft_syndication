@@ -2,12 +2,16 @@
 
 namespace BiwyzeTourinsoft\Core;
 
+use BiwyzeTourinsoft\Handlers\CustomPostType;
+use BiwyzeTourinsoft\Repositories\SyndicationRepository;
+
 class Loader
 {
 
     public function load() {
        $this->registerAssets();
        $this->registerRestRoutes();
+        add_action('init', [$this, 'registerCustomPostTypes']);
     }
 
     public function registerAssets () {
@@ -19,9 +23,19 @@ class Loader
 
             return str_replace( ' src', ' defer="defer" src', $tag );
         }, 10, 2 );
+
     }
 
     public function registerRestRoutes() {
         (new Api())->registerRestRoutes();
+    }
+
+    public function registerCustomPostTypes()
+    {
+        $syndicationsNames = array_map(static function ($syndication) {
+            return strtolower($syndication['name']);
+        }, (new SyndicationRepository())->all());
+
+        (new CustomPostType($syndicationsNames))->generateCustomPostTypes();
     }
 }

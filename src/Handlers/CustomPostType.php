@@ -13,7 +13,7 @@ class CustomPostType
 
     public function generateCustomPostTypes()
     {
-        foreach($this->types as $type) {
+        foreach ($this->types as $type) {
             register_post_type($type, $this->generateArgs($type));
             $this->registerTaxonomiesToCpt($type);
         }
@@ -22,35 +22,38 @@ class CustomPostType
     private function generateLabels(string $typeName): array
     {
         return [
-            'name' => _x($typeName, 'Post Type General Name'),
-            'singular_name' => _x($typeName, 'Post Type Singular Name'),
-            'menu_name' => __($typeName),
-            'all_items' => __('Tous les articles ' . $typeName),
-            'view_item' => __('Voir l\'article' . $typeName),
-            'add_new_item' => __('Ajouter un ' . $typeName),
-            'add_new' => __('Ajouter'),
-            'edit_item' => __('Editer le ' . $typeName),
-            'update_item' => __('Modifier le ' . $typeName),
-            'search_items' => __('Rechercher un ' . $typeName),
-            'not_found' => __('Non trouvé'),
-            'not_found_in_trash' => __('Non trouvé dans la corbeille'),
+            'name' => ucfirst($typeName),
+            'singular_name' => $typeName,
+            'menu_name' => ucfirst($typeName),
+            'all_items' => 'Tous les ' . $typeName,
+            'view_item' => 'Voir le/la/l\' ' . $typeName,
+            'add_new_item' => 'Ajouter un ' . $typeName,
+            'add_new' => 'Ajouter',
+            'edit_item' => 'Editer le ' . $typeName,
+            'update_item' => 'Modifier le ' . $typeName,
+            'search_items' => 'Rechercher un ' . $typeName,
+            'not_found' => 'Non trouvé',
+            'not_found_in_trash' => 'Non trouvé dans la corbeille',
         ];
     }
 
     private function generateArgs(string $typeName): array
     {
         return [
-            'label' => __($typeName),
-            'description' => __('Tous les ' . $typeName),
+            'label' => $typeName,
+            'description' => 'Tous les ' . $typeName,
             'labels' => $this->generateLabels($typeName),
             'supports' => ['title', 'editor', 'excerpt', 'author', 'thumbnail', 'revisions', 'custom-fields'],
             'hierarchical' => true,
             'public' => true,
             'has_archive' => true,
-            'rewrite' => ['slug' => sanitize_title($typeName), 'with_front' => false],
+            'show_in_menu' => true,
+            'show_in_rest' => true,
+//            'rewrite' => ['slug' => sanitize_title($typeName), 'with_front' => false],
             'taxonomies' => ['category', 'post_tag'],
         ];
     }
+
     private function registerTaxonomiesToCpt($typeName)
     {
         register_taxonomy_for_object_type('category', $typeName);
