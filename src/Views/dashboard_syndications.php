@@ -109,7 +109,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Détails de la syndication "<span x-text="currentSyndication.syndication.name"></span>"</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Détails de la syndication "<span x-text="getCurrentSyndicationName()"></span>"</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -123,13 +123,13 @@
                             </h2>
                             <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
-                                    <p><span x-text="currentSyndication.offers.raw.length"></span> offre(s) disponible(s)</p>
-                                    <ul class="list-group">
-                                    <template x-for="offer in currentSyndication.offers.raw">
-                                        <li class="list-group-item" x-text="offer.SyndicObjectName"></li>
+                                    <p><span x-text="getCurrentSyndicationOffers().length"></span> offre(s) disponible(s)</p>
+                                    <div class="list-group">
+                                    <template x-for="offer in getCurrentSyndicationOffers()">
+                                        <button type="button" class="list-group-item list-group-item-action" x-text="offer.SyndicObjectName"></button>
                                         <br/>
                                     </template>
-                                    </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -142,12 +142,12 @@
                             <div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <p><span x-text="getCurrentSyndicationFields().length"></span> champ(s) configuré(s)</p>
-                                    <ul class="list-group">
+                                    <div class="list-group">
                                     <template x-for="field in getCurrentSyndicationFields()">
-                                        <li class="list-group-item" x-text="field"></li>
+                                        <button type="button" class="list-group-item list-group-item-action" x-text="field"></button>
                                         <br/>
                                     </template>
-                                    </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>

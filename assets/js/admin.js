@@ -130,6 +130,12 @@ document.addEventListener('alpine:init', () => {
     },
     getCurrentSyndicationFields () {
         return Object.keys(this.currentSyndication?.offers?.raw[0] || [])
+    },
+    getCurrentSyndicationOffers (type = 'raw') {
+      return this.currentSyndication?.offers && type in this.currentSyndication?.offers ? this.currentSyndication?.offers[type] : []
+    },
+    getCurrentSyndicationName () {
+      return this.currentSyndication?.syndication?.name || ''
     }
   }))
 })
