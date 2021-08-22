@@ -14,17 +14,19 @@ class CustomPostType
     public function generateCustomPostTypes()
     {
         foreach ($this->types as $type) {
-            register_post_type($type, $this->generateArgs($type));
-            $this->registerTaxonomiesToCpt($type);
+            if (!post_type_exists($type)) {
+                register_post_type($type, $this->generateArgs($type));
+                $this->registerTaxonomiesToCpt($type);
+            }
         }
     }
 
     private function generateLabels(string $typeName): array
     {
         return [
-            'name' => ucfirst($typeName),
+            'name' => ucfirst($typeName) . ' (Tourinsoft)',
             'singular_name' => $typeName,
-            'menu_name' => ucfirst($typeName),
+            'menu_name' => ucfirst($typeName) . ' (Tourinsoft)',
             'all_items' => 'Tous les ' . $typeName,
             'view_item' => 'Voir le/la/l\' ' . $typeName,
             'add_new_item' => 'Ajouter un ' . $typeName,

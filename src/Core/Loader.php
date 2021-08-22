@@ -33,7 +33,7 @@ class Loader
     public function registerCustomPostTypes()
     {
         $syndicationsNames = array_map(static function ($syndication) {
-            return strtolower($syndication['name']);
+            return sanitize_title($syndication['name']);
         }, (new SyndicationRepository())->all());
 
         (new CustomPostType($syndicationsNames))->generateCustomPostTypes();
