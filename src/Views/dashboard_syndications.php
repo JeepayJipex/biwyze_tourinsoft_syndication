@@ -109,7 +109,8 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Détails de la syndication "<span x-text="getCurrentSyndicationName()"></span>"</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Détails de la syndication "<span
+                                x-text="getCurrentSyndicationName()"></span>"</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -117,47 +118,58 @@
 
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                                     Offres
                                 </button>
                             </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo"
+                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
-                                    <p><span x-text="getCurrentSyndicationOffers().length"></span> offre(s) disponible(s)</p>
+                                    <p><span x-text="getCurrentSyndicationOffers().length"></span> offre(s)
+                                        disponible(s)</p>
                                     <div class="list-group">
-                                    <template x-for="offer in getCurrentSyndicationOffers()">
-                                        <button type="button" class="list-group-item list-group-item-action" x-text="offer.SyndicObjectName"></button>
-                                        <br/>
-                                    </template>
+                                        <template x-for="offer in getCurrentSyndicationOffers()">
+                                            <button type="button" class="list-group-item list-group-item-action"
+                                                    x-text="offer.SyndicObjectName"></button>
+                                            <br/>
+                                        </template>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                     Champs disponibles
                                 </button>
                             </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="headingOne"
+                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
-                                    <p><span x-text="getCurrentSyndicationFields().length"></span> champ(s) configuré(s)</p>
+                                    <p><span x-text="getCurrentSyndicationFields().length"></span> champ(s) configuré(s)
+                                    </p>
                                     <div class="list-group">
-                                    <template x-for="field in getCurrentSyndicationFields()">
-                                        <button type="button" class="list-group-item list-group-item-action" x-text="field"></button>
-                                        <br/>
-                                    </template>
+                                        <template x-for="field in getCurrentSyndicationFields()">
+                                            <button type="button" class="list-group-item list-group-item-action"
+                                                    x-text="field"></button>
+                                            <br/>
+                                        </template>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree">
                                     Contenu du lien
                                 </button>
                             </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                      <textarea class="form-control" id="syndicationContent" rows="10" disabled
                                                x-text="currentSyndication.content"></textarea>
@@ -170,58 +182,69 @@
         </div>
     </div>
 
-        <!--    END MODALS   -->
+    <!--    END MODALS   -->
 
-        <!--    SYNDICATIONS   -->
-        <div class="d-flex justify-content-between align-items-center mb-5">
-            <h4 class="mb-4">Vos syndications</h4>
+    <!--    SYNDICATIONS   -->
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h4 class="mb-4">Vos syndications</h4>
+        <div>
             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                     data-bs-target="#addSyndicModal">Ajouter une syndication
             </button>
+            <button type="button" class="btn btn-secondary btn-sm" @click.prevent="syncAll">Tout synchroniser
+            </button>
         </div>
-
-
-        <div class="list-group mb-3">
-            <table class="table table-stripped table-hover">
-                <thead class="table-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Identifiant</th>
-                    <th scope="col">Catégorie</th>
-                    <th scope="col">Type de contenu</th>
-                    <th scope="col"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <template x-for="syndication in syndications">
-                    <tr>
-                        <th scope="row" x-text="syndication.id"></th>
-                        <td x-text="syndication.name"></td>
-                        <td x-text="syndication.syndic_id"></td>
-                        <td x-text-="getCategoryName(syndication.category_id)"></td>
-                        <td x-text-="getPostTypeName(syndication.associated_post_type)"></td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-outline-info btn-sm"
-                                        @click.prevent="getCurrentSyndication(syndication.id)" data-bs-toggle="modal"
-                                        data-bs-target="#previewSyndicModal">Voir
-                                </button>
-                                <button type="button" class="btn btn-outline-primary btn-sm"
-                                        @click.prevent="startSyndicationUpdate(syndication)" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal">Modifier
-                                </button>
-                                <button type="button" class="btn btn-outline-danger btn-sm"
-                                        @click.prevent="deleteSyndication(syndication.id)">Supprimer
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                </template>
-                </tbody>
-            </table>
-        </div>
-        <!--    END SYNDICATIONS   -->
     </div>
-    <?php ?>
+
+
+    <div class="list-group mb-3">
+        <table class="table table-stripped table-hover">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Identifiant</th>
+                <th scope="col">Catégorie</th>
+                <th scope="col">Type de contenu</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <template x-for="syndication in syndications">
+                <tr>
+                    <th scope="row" x-text="syndication.id"></th>
+                    <td x-text="syndication.name"></td>
+                    <td x-text="syndication.syndic_id"></td>
+                    <td x-text-="getCategoryName(syndication.category_id)"></td>
+                    <td x-text-="getPostTypeName(syndication.associated_post_type)"></td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-outline-info btn-sm"
+                                    data-toggle="tooltip" data-placement="bottom" title="Voir les détails"
+                                    @click.prevent="getCurrentSyndication(syndication.id)" data-bs-toggle="modal"
+                                    data-bs-target="#previewSyndicModal"><span class="dashicons dashicons-visibility"></span>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                    data-toggle="tooltip" data-placement="bottom" title="Modifier"
+                                    @click.prevent="startSyndicationUpdate(syndication)" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"><span class="dashicons dashicons-edit"></span>
+                            </button>
+                            <button type="button" class="btn btn-outline-danger btn-sm"
+                                    data-toggle="tooltip" data-placement="bottom" title="Supprimer"
+                                    @click.prevent="deleteSyndication(syndication.id)"><span class="dashicons dashicons-trash"></span>
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm"
+                                    data-toggle="tooltip" data-placement="bottom" title="Importer les offres"
+                                    @click.prevent="syncOne(syndication.id)"><span class="dashicons dashicons-image-rotate"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+
+            </template>
+            </tbody>
+        </table>
+    </div>
+    <!--    END SYNDICATIONS   -->
+</div>
+<?php ?>

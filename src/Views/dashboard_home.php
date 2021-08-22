@@ -17,9 +17,9 @@
             <li class="nav-item">
                 <a class="nav-link" x-bind:class="tab === 'syndications' ? 'active' : ''" x-on:click="setTab('syndications')" href="#">Syndications</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" x-bind:class="tab === 'options' ? 'active' : ''" x-on:click="setTab('options')" aria-current="page" href="#">Options</a>
-            </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" x-bind:class="tab === 'options' ? 'active' : ''" x-on:click="setTab('options')" aria-current="page" href="#">Options</a>-->
+<!--            </li>-->
         </ul>
     </div>
 
@@ -27,7 +27,7 @@
         <span class="visually-hidden">Loading...</span>
     </div>
 
-    <div class="mt-5 mb-5 ml-5 mr-5" x-show="!$store.main.loading">
+    <div class="mt-5 mb-5 ml-5 mr-5">
         <div x-show="tab === 'options'">
             <?php
                 require_once ('dashboard_options.php')

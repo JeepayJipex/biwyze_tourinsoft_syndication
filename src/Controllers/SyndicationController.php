@@ -21,7 +21,6 @@ class SyndicationController extends \WP_REST_Controller
     {
         try {
             $id = $request->get_param('id');
-            global $wpdb;
             $syndication = (new SyndicationRepository())->get($id);
             $reader = (new SyndicationReader($syndication->syndic_id, $syndication->name));
 

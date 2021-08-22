@@ -2,6 +2,7 @@
 
 namespace BiwyzeTourinsoft\Core;
 
+use BiwyzeTourinsoft\Controllers\SyncSyndicationController;
 use BiwyzeTourinsoft\Controllers\SyndicationController;
 
 class Api
@@ -65,6 +66,26 @@ class Api
                     'callback' => [SyndicationController::class, 'show']
                 ],
             ]);
+
+            register_rest_route('tourinsoft/v1', '/updater', [
+                [
+                    'methods' => ['POST'],
+                    'callback' => [SyncSyndicationController::class, 'updateAll'],
+                    'permission_callback' => function () {
+                        return current_user_can( 'manage_options' );
+                    }
+                ]
+            ]);
+            register_rest_route('tourinsoft/v1', '/updater/(?P<id>\d+)', [
+                [
+                    'methods' => ['POST'],
+                    'callback' => [SyncSyndicationController::class, 'updateOne'],
+                    'permission_callback' => function () {
+                        return current_user_can( 'manage_options' );
+                    }
+                ]
+            ]);
         });
+
     }
 }

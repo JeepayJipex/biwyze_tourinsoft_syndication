@@ -41,16 +41,19 @@ class SyndicationReader
     }
 
     public function getRawData() {
-        return get_transient('syndic_data_' . esc_sql($this->id) . '_' . esc_sql($this->syndicationName)) ?? $this->getJsonContent();
+        return get_transient('syndic_data_' . esc_sql($this->id) . '_' . esc_sql($this->syndicationName)) ?: $this->getJsonContent();
     }
     public function readSyndicData () {
         $this->data = $this->getJsonContent();
-        set_transient('syndic_data_' . esc_sql($this->id) . '_' . esc_sql($this->syndicationName), $this->data, 60 * 60 * 24);
+        set_transient('syndic_data_' . esc_sql($this->id) . '_' . esc_sql($this->syndicationName), $this->data, 60 * 5);
         return $this->data;
     }
 
     public function getOffers() {
-        $data = get_transient('syndic_data_' . esc_sql($this->id) . '_' . esc_sql($this->syndicationName)) ?? $this->readSyndicData();
+        $data = get_transient('syndic_data_' . esc_sql($this->id) . '_' . esc_sql($this->syndicationName));
+        if(!$data) {
+            $data = $this->readSyndicData();
+        }
         return $data[$this->versionCorrespondances[$this->version] ?? 'd'];
     }
 

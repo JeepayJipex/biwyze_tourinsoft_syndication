@@ -20,10 +20,10 @@ class SyndicationPostCreator
     public function __construct(array $syndication)
     {
         $this->syndication = $syndication;
-        $this->reader = new SyndicationReader($syndication['id'], $syndication['name']);
+        $this->reader = new SyndicationReader($syndication['syndic_id'], $syndication['name']);
     }
 
-    public function readContent()
+    public function readContent(): SyndicationPostCreator
     {
         $this->offers = $this->reader->getParsedOffers();
         return $this;

@@ -136,6 +136,31 @@ document.addEventListener('alpine:init', () => {
     },
     getCurrentSyndicationName () {
       return this.currentSyndication?.syndication?.name || ''
+    },
+    async syncAll() {
+      Alpine.store('main').toggleLoading()
+      if(confirm('Êtes vous sûr de vouloir importer les offres de toutes les syndications ?')) {
+        const result = await sendRequest('tourinsoft/v1/updater', 'POST')
+        if (result) {
+          alert('Syndications synchronisées')
+        } else {
+          alert('Erreur lors de la synchronisation')
+        }
+      }
+      Alpine.store('main').toggleLoading()
+    },
+    async syncOne(id) {
+      Alpine.store('main').toggleLoading()
+      const syndication = this.syndications.find(s => s.id === id)
+      if(confirm('Êtes vous sûr de vouloir importer les offres ' + syndication?.name + ' ?')) {
+        const result = await sendRequest('tourinsoft/v1/updater/' + id, 'POST')
+        if (result) {
+          alert('Syndication ' + syndication?.name + ' synchronisée')
+        } else {
+          alert('Erreur lors de la synchronisation')
+        }
+      }
+      Alpine.store('main').toggleLoading()
     }
   }))
 })

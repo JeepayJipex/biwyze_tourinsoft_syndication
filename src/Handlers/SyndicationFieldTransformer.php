@@ -8,7 +8,7 @@ class SyndicationFieldTransformer
     {
         $fieldValue = SyndicationFieldReader::separateField($fieldValue);
 
-        if(!method_exists(SyndicationFieldReader::class, strtolower($fieldKey))) {
+        if(!method_exists(__CLASS__, strtolower($fieldKey))) {
             $transformedField =  array_map(function($value) {
                 return implode('\n', $value);
             }, $fieldValue);
@@ -20,5 +20,9 @@ class SyndicationFieldTransformer
         }
         $method = strtolower($fieldKey);
         return self::{$method}($fieldValue);
+    }
+
+    public static function photos ($field) {
+        return $field;
     }
 }
