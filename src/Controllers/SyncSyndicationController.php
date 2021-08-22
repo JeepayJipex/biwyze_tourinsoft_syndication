@@ -4,30 +4,33 @@ namespace BiwyzeTourinsoft\Controllers;
 
 use BiwyzeTourinsoft\Handlers\SyndicationPostCreator;
 use BiwyzeTourinsoft\Handlers\SyndicationPostDeleter;
+use BiwyzeTourinsoft\Repositories\SyncSyndicationRepository;
 use BiwyzeTourinsoft\Repositories\SyndicationRepository;
 
 class SyncSyndicationController extends \WP_REST_Controller
 {
     public static function updateAll(\WP_REST_Request $request): \WP_REST_Response
     {
-        $syndications = (new SyndicationRepository())->all();
-        foreach ($syndications as $syndication) {
-            if (!self::syncSyndication($syndication)) {
-                return new \WP_REST_Response('error updating syndications, this one failed : ' . $syndication['name'], 500);
-            }
+        try {
+            SyncSyndicationRepository::updateAll();
+            return new \WP_REST_Response('updated all syndications', 200);
+        } catch (\Exception $exception) {
+            return new \WP_REST_Response($exception->getMessage(), 500);
         }
-        return new \WP_REST_Response('updated all syndications', 200);
+
     }
 
     public static function updateOne(\WP_REST_Request $request): \WP_REST_Response
     {
+        try {
+            $id = $request->get_param('id');
+            SyncSyndicationRepository::updateOne($id);
+            return new \WP_REST_Response('updated all syndications', 200);
 
-        $id = $request->get_param('id');
-        $syndication = (new SyndicationRepository())->get($id);
-        if (!self::syncSyndication(json_decode(json_encode($syndication), true))) {
-            return new \WP_REST_Response('error updating syndication', 500);
+        } catch (\Exception $exception) {
+            return new \WP_REST_Response($exception->getMessage(), 500);
         }
-        return new \WP_REST_Response('updated all syndications', 200);
+
     }
 
     /**

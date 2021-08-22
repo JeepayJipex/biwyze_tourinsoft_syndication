@@ -26,7 +26,9 @@ class BiwyzeTourinsoftSyndication
     public function boot() {
         add_action( 'plugins_loaded', [$this, 'plugins_loaded']);
         add_action('admin_menu', [Admin::class, 'createAdminPages']);
-
+        if (!wp_next_scheduled('cron_tourinsoft')) {
+            wp_schedule_event(strtotime('04:00:00'), 'daily', 'cron_tourinsoft');
+        }
         (new Loader())->load();
     }
 
