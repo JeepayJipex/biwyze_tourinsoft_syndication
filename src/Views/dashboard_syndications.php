@@ -188,10 +188,12 @@
     <div class="d-flex justify-content-between align-items-center mb-5">
         <h4 class="mb-4">Vos syndications</h4>
         <div>
-            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+            <button x-bind:disabled="$store.main.loading"
+                    type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                     data-bs-target="#addSyndicModal">Ajouter une syndication
             </button>
-            <button type="button" class="btn btn-secondary btn-sm" @click.prevent="syncAll">Tout synchroniser
+            <button x-bind:disabled="$store.main.loading"
+                    type="button" class="btn btn-secondary btn-sm" @click.prevent="syncAll">Tout synchroniser
             </button>
         </div>
     </div>
@@ -221,21 +223,28 @@
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <button type="button" class="btn btn-outline-info btn-sm"
                                     data-toggle="tooltip" data-placement="bottom" title="Voir les détails"
+                                    x-bind:disabled="$store.main.loading"
                                     @click.prevent="getCurrentSyndication(syndication.id)" data-bs-toggle="modal"
-                                    data-bs-target="#previewSyndicModal"><span class="dashicons dashicons-visibility"></span>
+                                    data-bs-target="#previewSyndicModal"><span
+                                        class="dashicons dashicons-visibility"></span>
                             </button>
                             <button type="button" class="btn btn-outline-primary btn-sm"
                                     data-toggle="tooltip" data-placement="bottom" title="Modifier"
                                     @click.prevent="startSyndicationUpdate(syndication)" data-bs-toggle="modal"
+                                    x-bind:disabled="$store.main.loading"
                                     data-bs-target="#exampleModal"><span class="dashicons dashicons-edit"></span>
                             </button>
                             <button type="button" class="btn btn-outline-danger btn-sm"
                                     data-toggle="tooltip" data-placement="bottom" title="Supprimer"
-                                    @click.prevent="deleteSyndication(syndication.id)"><span class="dashicons dashicons-trash"></span>
+                                    x-bind:disabled="$store.main.loading"
+                                    @click.prevent="deleteSyndication(syndication.id)"><span
+                                        class="dashicons dashicons-trash"></span>
                             </button>
                             <button type="button" class="btn btn-outline-secondary btn-sm"
                                     data-toggle="tooltip" data-placement="bottom" title="Importer les offres"
-                                    @click.prevent="syncOne(syndication.id)"><span class="dashicons dashicons-image-rotate"></span>
+                                    x-bind:disabled="$store.main.loading"
+                                    @click.prevent="syncOne(syndication.id)"><span
+                                        class="dashicons dashicons-image-rotate"></span>
                             </button>
                         </div>
                     </td>
