@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/JeepayJipex/biwyze_tourinsoft_syndication",
-  "author": "JeepayJipex <jmariette@biwyze.fr>",
+  "author": "JeepayJipex <jean.mariette@biwyze.fr>",
   "license": "MIT",
   "scripts": {
     "dev": "rollup assets/js/main.js --config rollup.config.js",

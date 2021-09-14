@@ -35,6 +35,7 @@ class Loader
 
     public function registerCustomPostTypes()
     {
+        (new CustomPostType(['article_tourinsoft']))->generateCustomPostTypes();
         if((int) OptionsRepository::getOption('create_custom_types') === 0) return;
 
         $syndicationsNames = array_map(static function ($syndication) {

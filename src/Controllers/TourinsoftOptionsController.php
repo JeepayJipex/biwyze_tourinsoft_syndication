@@ -27,7 +27,14 @@ class TourinsoftOptionsController extends \WP_REST_Controller
     public static function generateExport(\WP_REST_Request $request): \WP_REST_Response
     {
         return new \WP_REST_Response([
-            'syndications' => SyndicationRepository::all(),
+            'syndications' => array_map(static function ($syndication) {
+                return [
+                    "name" => $syndication['name'],
+                    "syndic_id" => $syndication['syndic_id'],
+                    "category_id" => get_term_by('id', $syndication['category_id'], 'category') ? $syndication['category_id'] : '0',
+                    "associated_post_type" => 'article_tourinsoft'
+                ];
+            }, SyndicationRepository::all()),
             'options' => OptionsRepository::allOptions()
         ], 200);
     }
@@ -40,13 +47,12 @@ class TourinsoftOptionsController extends \WP_REST_Controller
         $syndications = $request->get_param('syndications');
         $syndications = json_decode(json_encode($syndications), true);
 
-        if (OptionsRepository::saveOptions($options)) {
-            SyndicationRepository::empty();
-            foreach ($syndications as $syndication) {
-                $newSyndication = SyndicationRepository::store($syndication);
-            }
-            SyncSyndicationRepository::updateAll();
+        OptionsRepository::saveOptions($options);
+        SyndicationRepository::empty();
+        foreach ($syndications as $syndication) {
+            $newSyndication = SyndicationRepository::store($syndication);
         }
+        SyncSyndicationRepository::updateAll();
 
         return new \WP_REST_Response('done', 201);
     }

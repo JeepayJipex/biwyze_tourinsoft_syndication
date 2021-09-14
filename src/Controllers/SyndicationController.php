@@ -50,7 +50,7 @@ class SyndicationController extends \WP_REST_Controller
 
             return SyndicationRepository::store($params);
         } catch (\Exception $e) {
-            return self::handleError($e->getMessage(), 500);
+            return self::handleError($e->getMessage());
         }
 
     }
@@ -62,7 +62,7 @@ class SyndicationController extends \WP_REST_Controller
             $params = json_decode(json_encode($params), true);
             return SyndicationRepository::update($request->get_param('id'), $params);
         } catch (\Exception $e) {
-            return self::handleError($e->getMessage(), 500);
+            return self::handleError($e->getMessage());
         }
     }
 
