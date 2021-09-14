@@ -4,6 +4,7 @@ namespace BiwyzeTourinsoft\Core;
 
 use BiwyzeTourinsoft\Controllers\SyncSyndicationController;
 use BiwyzeTourinsoft\Controllers\SyndicationController;
+use BiwyzeTourinsoft\Controllers\TourinsoftOptionsController;
 
 class Api
 {
@@ -80,6 +81,26 @@ class Api
                 [
                     'methods' => ['POST'],
                     'callback' => [SyncSyndicationController::class, 'updateOne'],
+                    'permission_callback' => function () {
+                        return current_user_can( 'manage_options' );
+                    }
+                ]
+            ]);
+
+            register_rest_route('tourinsoft/v1', '/options', [
+                [
+                    'methods' => ['GET'],
+                    'callback' => [TourinsoftOptionsController::class, 'list'],
+                    'permission_callback' => function () {
+                        return current_user_can( 'manage_options' );
+                    }
+                ]
+            ]);
+
+            register_rest_route('tourinsoft/v1', '/options', [
+                [
+                    'methods' => ['POST'],
+                    'callback' => [TourinsoftOptionsController::class, 'register'],
                     'permission_callback' => function () {
                         return current_user_can( 'manage_options' );
                     }

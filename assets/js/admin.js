@@ -161,6 +161,14 @@ document.addEventListener('alpine:init', () => {
         }
       }
       Alpine.store('main').toggleLoading()
+    },
+    validateSyndication(syndication) {
+      const {name, syndic_id, category_id, associated_post_type} = syndication
+      if(typeof name !== 'string' || name === '') return false
+      if(typeof associated_post_type !== 'string' || associated_post_type === '') return false
+      if(typeof syndic_id !== 'string' || syndic_id === '') return false
+      if(!category_id || Number.isNaN(parseInt(category_id, 10))) return false
+      return true
     }
   }))
 })

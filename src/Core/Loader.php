@@ -3,6 +3,7 @@
 namespace BiwyzeTourinsoft\Core;
 
 use BiwyzeTourinsoft\Handlers\CustomPostType;
+use BiwyzeTourinsoft\Repositories\OptionsRepository;
 use BiwyzeTourinsoft\Repositories\SyncSyndicationRepository;
 use BiwyzeTourinsoft\Repositories\SyndicationRepository;
 
@@ -34,6 +35,8 @@ class Loader
 
     public function registerCustomPostTypes()
     {
+        if((int) OptionsRepository::getOption('create_custom_types') === 0) return;
+
         $syndicationsNames = array_map(static function ($syndication) {
             return sanitize_title($syndication['name']);
         }, (new SyndicationRepository())->all());

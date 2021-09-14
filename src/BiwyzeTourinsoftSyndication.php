@@ -6,6 +6,7 @@ use BiwyzeTourinsoft\Core\Admin;
 use BiwyzeTourinsoft\Core\Install;
 use BiwyzeTourinsoft\Core\Loader;
 use BiwyzeTourinsoft\Handlers\CustomPostType;
+use BiwyzeTourinsoft\Repositories\OptionsRepository;
 use BiwyzeTourinsoft\Repositories\SyndicationRepository;
 
 class BiwyzeTourinsoftSyndication
@@ -24,6 +25,7 @@ class BiwyzeTourinsoftSyndication
     const TOURINSOFT_API_VERSION_OPTION = 'biwyze_tourinsoft_api_version';
 
     public function boot() {
+        OptionsRepository::registerDefaults(OptionsRepository::KEEP_SAVED);
         add_action( 'plugins_loaded', [$this, 'plugins_loaded']);
         add_action('admin_menu', [Admin::class, 'createAdminPages']);
         if (!wp_next_scheduled('cron_tourinsoft')) {

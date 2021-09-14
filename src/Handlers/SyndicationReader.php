@@ -4,6 +4,7 @@ namespace BiwyzeTourinsoft\Handlers;
 
 use BiwyzeTourinsoft\BiwyzeTourinsoftSyndication;
 use BiwyzeTourinsoft\Helpers;
+use BiwyzeTourinsoft\Repositories\OptionsRepository;
 
 class SyndicationReader
 {
@@ -35,8 +36,8 @@ class SyndicationReader
     public function __construct(string $id, string $syndicationName)
     {
         $this->id = $id;
-        $this->cdt = get_option(BiwyzeTourinsoftSyndication::CDT_OPTION, 'cdt31');
-        $this->version = get_option(BiwyzeTourinsoftSyndication::TOURINSOFT_API_VERSION_OPTION, '3.0');
+        $this->cdt = OptionsRepository::getOption(BiwyzeTourinsoftSyndication::CDT_OPTION);
+        $this->version = OptionsRepository::getOption(BiwyzeTourinsoftSyndication::TOURINSOFT_API_VERSION_OPTION);
         $this->syndicationName = $syndicationName;
     }
 
@@ -45,6 +46,9 @@ class SyndicationReader
     }
     public function readSyndicData () {
         $this->data = $this->getJsonContent();
+
+        if(!$this->data) return;
+
         set_transient('syndic_data_' . esc_sql($this->id) . '_' . esc_sql($this->syndicationName), $this->data, 60 * 5);
         return $this->data;
     }

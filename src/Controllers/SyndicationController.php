@@ -44,7 +44,9 @@ class SyndicationController extends \WP_REST_Controller
             $params = $request->get_param('syndication');
             $params = json_decode(json_encode($params), true);
 
-            (new SyndicationReader($params['syndic_id'], $params['name']))->readSyndicData();
+            if(!(new SyndicationReader($params['syndic_id'], $params['name']))->readSyndicData()) {
+             throw new \Exception('impossible to read this syndication');
+            }
 
             return (new SyndicationRepository())->store($params);
         } catch (\Exception $e) {
