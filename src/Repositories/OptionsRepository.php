@@ -47,18 +47,36 @@ class OptionsRepository
         $options = [];
 
         foreach ($optionsList as $option) {
-            $options[$option['identifier']] = self::getOption($option['identifier']);
+            $options[] = array_merge($option, ['value' => self::getOption($option['identifier'])]);
         }
 
         return $options;
     }
 
-    public static function getOption($option, $default = null)
+    public static function getOption(string $option, $default = null)
     {
         if (!function_exists('get_option')) return null;
 
         $optionsDefault = Parser::get('options')['defaults'];
 
         return get_option(BiwyzeTourinsoftSyndication::PREFIX . '_' . $option, $default ?? $optionsDefault[$option] ?? null);
+    }
+
+    public static function saveOptions(array $options) {
+        if (!function_exists('update_option')) return;
+        if (!function_exists('get_option')) return;
+        if (!function_exists('add_option')) return;
+        if (!function_exists('esc_sql')) return;
+
+        foreach($options as $option) {
+            $optionName = esc_sql(BiwyzeTourinsoftSyndication::PREFIX . '_' . $option['identifier']);
+            if(get_option($optionName, null) === null) {
+                if(!add_option($optionName, $option['value'])) return false;
+                continue;
+            }
+            if(!update_option($optionName, $option['value'])) return false;
+
+            return true;
+        }
     }
 }

@@ -39,7 +39,7 @@ class Loader
 
         $syndicationsNames = array_map(static function ($syndication) {
             return sanitize_title($syndication['name']);
-        }, (new SyndicationRepository())->all());
+        }, SyndicationRepository::all());
 
         (new CustomPostType($syndicationsNames))->generateCustomPostTypes();
     }

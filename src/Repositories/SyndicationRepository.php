@@ -6,19 +6,19 @@ use BiwyzeTourinsoft\BiwyzeTourinsoftSyndication;
 
 class SyndicationRepository
 {
-    public function all()
+    static public function all()
     {
         global $wpdb;
         return $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE, ARRAY_A);
     }
 
-    public function get(int $id)
+    public static function get(int $id)
     {
         global $wpdb;
         return $wpdb->get_row('SELECT * FROM ' . $wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE . ' WHERE id = ' . $id . ';');
     }
 
-    public function update(int $id, array $data)
+    public static function update(int $id, array $data)
     {
         global $wpdb;
 
@@ -27,7 +27,7 @@ class SyndicationRepository
         return $wpdb->get_row('SELECT * FROM ' . $wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE . ' WHERE id = ' . $id . ';');
     }
 
-    public function store (array $data) {
+    public static function store (array $data) {
         global $wpdb;
 
         $wpdb->insert($wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE, array_merge($data, [
@@ -39,10 +39,16 @@ class SyndicationRepository
 
     }
 
-    public function delete(int $id)
+    public static function delete(int $id)
     {
         global $wpdb;
 
         return $wpdb->delete($wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE, ['id' => $id]);
+    }
+
+    public static function empty()
+    {
+        global $wpdb;
+        return $wpdb->query("TRUNCATE table " .$wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE .";");
     }
 }

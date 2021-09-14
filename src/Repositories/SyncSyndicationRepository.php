@@ -10,14 +10,14 @@ class SyncSyndicationRepository
 
     public static function updateOne(int $id)
     {
-        $syndication = (new SyndicationRepository())->get($id);
+        $syndication = SyndicationRepository::get($id);
         if (!self::syncSyndication(json_decode(json_encode($syndication), true))) {
             throw new \Exception('error updating syndication');
         }
     }
     public static function updateAll()
     {
-        $syndications = (new SyndicationRepository())->all();
+        $syndications = SyndicationRepository::all();
         foreach ($syndications as $syndication) {
             if (!self::syncSyndication($syndication)) {
                 throw new \Exception('error updating syndications, this one failed : ' . $syndication['name']);

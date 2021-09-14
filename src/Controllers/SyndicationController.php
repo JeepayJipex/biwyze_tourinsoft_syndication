@@ -11,7 +11,7 @@ class SyndicationController extends \WP_REST_Controller
     public static function index()
     {
         try {
-            return (new SyndicationRepository())->all();
+            return SyndicationRepository::all();
         } catch (\Exception $exception) {
             return self::handleError($exception->getMessage());
         }
@@ -21,7 +21,7 @@ class SyndicationController extends \WP_REST_Controller
     {
         try {
             $id = $request->get_param('id');
-            $syndication = (new SyndicationRepository())->get($id);
+            $syndication = SyndicationRepository::get($id);
             $reader = (new SyndicationReader($syndication->syndic_id, $syndication->name));
 
             return [
@@ -48,7 +48,7 @@ class SyndicationController extends \WP_REST_Controller
              throw new \Exception('impossible to read this syndication');
             }
 
-            return (new SyndicationRepository())->store($params);
+            return SyndicationRepository::store($params);
         } catch (\Exception $e) {
             return self::handleError($e->getMessage(), 500);
         }
@@ -60,7 +60,7 @@ class SyndicationController extends \WP_REST_Controller
         try {
             $params = $request->get_param('syndication');
             $params = json_decode(json_encode($params), true);
-            return (new SyndicationRepository())->update($request->get_param('id'), $params);
+            return SyndicationRepository::update($request->get_param('id'), $params);
         } catch (\Exception $e) {
             return self::handleError($e->getMessage(), 500);
         }
@@ -69,7 +69,7 @@ class SyndicationController extends \WP_REST_Controller
     public static function delete(\WP_REST_Request $request)
     {
         try {
-            return ["success" => (new SyndicationRepository())->delete($request->get_param('id'))];
+            return ["success" => SyndicationRepository::delete($request->get_param('id'))];
         } catch (\Exception $exception) {
             return self::handleError($exception->getMessage());
         }

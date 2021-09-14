@@ -106,6 +106,26 @@ class Api
                     }
                 ]
             ]);
+
+            register_rest_route('tourinsoft/v1', '/export', [
+                [
+                    'methods' => ['GET'],
+                    'callback' => [TourinsoftOptionsController::class, 'generateExport'],
+                    'permission_callback' => function () {
+                        return current_user_can( 'manage_options' );
+                    }
+                ]
+            ]);
+
+            register_rest_route('tourinsoft/v1', '/import', [
+                [
+                    'methods' => ['POST'],
+                    'callback' => [TourinsoftOptionsController::class, 'importData'],
+                    'permission_callback' => function () {
+                        return current_user_can( 'manage_options' );
+                    }
+                ]
+            ]);
         });
 
     }

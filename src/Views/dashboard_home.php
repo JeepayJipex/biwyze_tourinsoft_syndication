@@ -17,9 +17,9 @@
             <li class="nav-item">
                 <a class="nav-link" x-bind:class="tab === 'syndications' ? 'active' : ''" x-on:click="setTab('syndications')" href="#">Syndications</a>
             </li>
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" x-bind:class="tab === 'options' ? 'active' : ''" x-on:click="setTab('options')" aria-current="page" href="#">Options</a>-->
-<!--            </li>-->
+            <li class="nav-item">
+                <a class="nav-link" x-bind:class="tab === 'options' ? 'active' : ''" x-on:click="setTab('options')" aria-current="page" href="#">Options</a>
+            </li>
         </ul>
     </div>
 
