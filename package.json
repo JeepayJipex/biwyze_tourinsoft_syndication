@@ -1,0 +1,13 @@
+{
+  "name": "biwyze_tourinsoft_syndication",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://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@github.com/JeepayJipex/biwyze_tourinsoft_syndication",
+  "author": "JeepayJipex <jmariette@biwyze.fr>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "rollup assets/js/main.js --config rollup.config.js",
+    "watch": "rollup assets/js/main.js --config rollup.config.js --watch"
+  }
+
+}
