@@ -1,4 +1,4 @@
-# Biwyze Tourinsoft Syndication
+# Biwyze Tourinsoft Syndication (Alpha)
 
 Plugin pour permettre la syndication automatique des offres Tourinsoft
 sur votre site Wordpress
