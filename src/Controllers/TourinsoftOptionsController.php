@@ -52,7 +52,7 @@ class TourinsoftOptionsController extends \WP_REST_Controller
         foreach ($syndications as $syndication) {
             $newSyndication = SyndicationRepository::store($syndication);
         }
-        SyncSyndicationRepository::updateAll();
+//        SyncSyndicationRepository::updateAll();
 
         return new \WP_REST_Response('done', 201);
     }

@@ -23,8 +23,9 @@
                         <label for="syndic_category" class="form-label">Catégorie à associer</label>
                         <select id="syndic_category" class="form-select"
                                 x-model="updatedSyndication.category_id" required aria-required="true">
+                            <option value="" disabled aria-disabled="true">--Veuillez choisir une option--</option>
                             <template x-for="category in categories">
-                                <option x-text="category.name" :value="category.id" :selected="updatedSyndication.category_id === category.id"></option>
+                                <option x-text="category.name" :value="category.id" :selected="updatedSyndication.category_id == category.id"></option>
                             </template>
                         </select>
                     </div>
@@ -32,6 +33,7 @@
                         <label for="associated_post_type" class="form-label">Type de contenu à associer</label>
                         <select id="associated_post_type" class="form-select"
                                 x-model="updatedSyndication.associated_post_type" required aria-required="true">
+                            <option value="" disabled aria-disabled="true">--Veuillez choisir une option--</option>
                             <template x-for="type in postTypes">
                                 <option x-text="type.name" :value="type.slug" :selected="updatedSyndication.associated_post_type === type.slug"></option>
                             </template>
