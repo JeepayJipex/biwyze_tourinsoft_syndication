@@ -1,7 +1,9 @@
 <?php
 
 namespace BiwyzeTourinsoft;
-
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
 class Helpers
 {
     public static function file_get_contents_curl( $url ) {

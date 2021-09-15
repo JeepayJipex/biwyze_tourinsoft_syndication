@@ -1,7 +1,9 @@
 <?php
 
 namespace BiwyzeTourinsoft\Handlers;
-
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
 class SyndicationPostDeleter
 {
     /**

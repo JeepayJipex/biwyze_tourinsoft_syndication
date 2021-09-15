@@ -9,6 +9,10 @@ Author URI: https://biwyze.fr
 License: propriétaire
 */
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
 use BiwyzeTourinsoft\Core\Install;
 
 require_once(__DIR__ . '/vendor/autoload.php');

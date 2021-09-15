@@ -1,3 +1,8 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+?>
 <div class="modal fade" id="addSyndicModal" tabindex="-1" data-bs-backdrop="static"
      aria-labelledby="addSyndicModalLabel" aria-hidden="true">
     <div class="modal-dialog">

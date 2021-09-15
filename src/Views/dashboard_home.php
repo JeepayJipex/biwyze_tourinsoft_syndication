@@ -1,12 +1,7 @@
 <?php
-//$data = (new \BiwyzeTourinsoft\Handlers\SyndicationReader("1b7cfeb8-2443-4194-a7d3-f07d0b96755a", "Chambres d'hôtes"))->getOffers();
-//foreach($data[0] as $field => $value) {
-//    if($value){
-//        echo $field . ' => ' . '                        ' . PHP_EOL;
-//        var_dump(\BiwyzeTourinsoft\Handlers\SyndicationFieldTransformer::handleFieldTransform($field, $value));
-//        echo PHP_EOL;
-//    }
-//}
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
 ?>
 <div class="container" x-data="tabs">
     <h2>Syndications Tourinsoft</h2>

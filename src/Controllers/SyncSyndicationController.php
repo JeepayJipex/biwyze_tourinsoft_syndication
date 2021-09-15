@@ -1,7 +1,9 @@
 <?php
 
 namespace BiwyzeTourinsoft\Controllers;
-
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
 use BiwyzeTourinsoft\Handlers\SyndicationPostCreator;
 use BiwyzeTourinsoft\Handlers\SyndicationPostDeleter;
 use BiwyzeTourinsoft\Repositories\SyncSyndicationRepository;

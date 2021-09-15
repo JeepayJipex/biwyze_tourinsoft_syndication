@@ -1,7 +1,9 @@
 <?php
 
 namespace BiwyzeTourinsoft\Database;
-
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
 use BiwyzeTourinsoft\BiwyzeTourinsoftSyndication;
 
 class Tables

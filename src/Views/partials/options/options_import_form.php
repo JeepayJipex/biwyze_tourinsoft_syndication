@@ -1,3 +1,8 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+?>
 <div x-data="importExport">
     <h5 class="mb-3">Importer une sauvegarde</h5>
     <div class="mb-3">

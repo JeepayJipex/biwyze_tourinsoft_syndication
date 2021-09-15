@@ -1,3 +1,8 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+?>
 <div x-data="options" class="py-5 d-flex flex-column align-items-start">
     <h5 class="mb-3 mb-3">Configuration de l'extension</h5>
     <template x-for="option in optionsList">

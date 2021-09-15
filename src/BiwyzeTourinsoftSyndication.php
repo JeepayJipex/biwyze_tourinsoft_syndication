@@ -1,7 +1,9 @@
 <?php
 
 namespace BiwyzeTourinsoft;
-
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
 use BiwyzeTourinsoft\Core\Admin;
 use BiwyzeTourinsoft\Core\Install;
 use BiwyzeTourinsoft\Core\Loader;

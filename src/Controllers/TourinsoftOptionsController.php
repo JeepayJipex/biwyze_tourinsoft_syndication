@@ -1,7 +1,9 @@
 <?php
 
 namespace BiwyzeTourinsoft\Controllers;
-
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
 use BiwyzeTourinsoft\Repositories\OptionsRepository;
 use BiwyzeTourinsoft\Repositories\SyncSyndicationRepository;
 use BiwyzeTourinsoft\Repositories\SyndicationRepository;
