@@ -5,7 +5,6 @@ namespace BiwyzeTourinsoft\Controllers;
 use BiwyzeTourinsoft\Handlers\SyndicationPostCreator;
 use BiwyzeTourinsoft\Handlers\SyndicationPostDeleter;
 use BiwyzeTourinsoft\Repositories\SyncSyndicationRepository;
-use BiwyzeTourinsoft\Repositories\SyndicationRepository;
 
 class SyncSyndicationController extends \WP_REST_Controller
 {
@@ -31,24 +30,5 @@ class SyncSyndicationController extends \WP_REST_Controller
             return new \WP_REST_Response($exception->getMessage(), 500);
         }
 
-    }
-
-    /**
-     * @param $syndication
-     * @return bool
-     */
-    protected static function syncSyndication($syndication): bool
-    {
-        $deleter = new SyndicationPostDeleter($syndication);
-        $posts = $deleter->getSyndicationAssociatedPosts();
-        if (!$deleter->deletePosts($posts)) {
-            return false;
-        }
-
-        $updater = new SyndicationPostCreator($syndication);
-        if (!$updater->readContent()->createPosts()) {
-            return false;
-        }
-        return true;
     }
 }
