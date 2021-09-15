@@ -6,14 +6,14 @@ export default () => {
       await this.getOptions()
     },
     optionsList: [],
-    getBooleanValue(option) {
-      return option !== '0'
+    getBooleanValue(value) {
+      return value !== '0'
     },
-    setBooleanValue(option) {
-      return option ? '1' : '0'
+    setBooleanValue(value) {
+      return value ? '1' : '0'
     },
     transformOptionsValues(options) {
-      return options.map(option => ({...option, value: option.type === 'boolean' ? option.value ? '1' : '0' : option.value }))
+      return options.map(option => ({...option, value: option.type === 'boolean' ? this.setBooleanValue(option.value) : option.value }))
     },
     async saveOptions() {
       const response = await sendRequest('tourinsoft/v1/options', 'POST', {
@@ -26,6 +26,7 @@ export default () => {
     },
     async getOptions() {
       this.optionsList = await sendRequest('tourinsoft/v1/options')
+      this.optionsList = this.optionsList.map(option => ({...option, value: option.type === 'boolean' ? this.getBooleanValue(option.value) : option.value}))
     }
   }))
 }

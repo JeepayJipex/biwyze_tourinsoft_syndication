@@ -23,7 +23,7 @@ class TourinsoftOptionsController extends \WP_REST_Controller
         if (OptionsRepository::saveOptions($options)) {
             return new \WP_REST_Response('done', 200);
         }
-        return \WP_REST_Response('Error while updating options', 500);
+        return new \WP_REST_Response('Error while updating options', 500);
     }
 
     public static function generateExport(\WP_REST_Request $request): \WP_REST_Response

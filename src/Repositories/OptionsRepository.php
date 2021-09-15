@@ -70,15 +70,19 @@ class OptionsRepository
         if (!function_exists('add_option')) return;
         if (!function_exists('esc_sql')) return;
 
+        $success = true;
         foreach($options as $option) {
             $optionName = esc_sql(BiwyzeTourinsoftSyndication::PREFIX . '_' . $option['identifier']);
-            if(get_option($optionName, null) === null) {
-                if(!add_option($optionName, $option['value'])) return false;
+            $optionValue = get_option($optionName);
+            $success = true;
+            if($optionValue === $option['value']) continue;
+            if($optionValue === null) {
+                if(!add_option($optionName, $option['value'])) $success = false;
                 continue;
             }
-            if(!update_option($optionName, $option['value'])) return false;
+            if(!update_option($optionName, $option['value'])) $success = false;
 
-            return true;
+            return $success;
         }
     }
 }

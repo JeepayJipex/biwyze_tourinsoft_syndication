@@ -5,11 +5,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div x-data="options" class="py-5 d-flex flex-column align-items-start">
     <h5 class="mb-3 mb-3">Configuration de l'extension</h5>
-    <template x-for="option in optionsList">
+    <template x-for="option in optionsList" :key="option.identifier">
         <div class="mt-3">
             <template x-if="option.type === 'boolean'">
                 <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" :value="getBooleanValue(option.value)"
+                    <input class="form-check-input" type="checkbox" :value="option.value"
                            x-model="option.value" :id="option.identifier">
                     <label class="form-check-label" :for="option.identifier" x-text="option.label">
                     </label>
