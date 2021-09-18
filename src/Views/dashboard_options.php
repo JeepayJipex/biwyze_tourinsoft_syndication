@@ -13,3 +13,6 @@ include(__DIR__ . '/partials/options/options_list_form.php');
 <?php
 include(__DIR__ . '/partials/options/options_import_form.php');
 ?>
+<hr>
+<?php
+include(__DIR__ . '/partials/options/options_elementor_form.php');

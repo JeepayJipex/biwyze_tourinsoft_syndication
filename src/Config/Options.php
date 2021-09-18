@@ -25,13 +25,14 @@ class Options
                 BiwyzeTourinsoftSyndication::TOURINSOFT_API_VERSION_OPTION => '3.0',
                 BiwyzeTourinsoftSyndication::CDT_OPTION => 'cdt31'
             ],
+            'elementor' => self::elementorFields()
         ];
     }
 
     protected static function elementorFields () {
-        if (OptionsRepository::getOption('use_elementor_templates') === "1") {
-            return array_map(function ($syndication) {
-                return ['identifier' => 'use_elementor_template_number', 'label' => "Syndication ". $syndication['name'] . ": Numéro de template elementor", 'type'=> 'boolean'];
+        if (get_option(BiwyzeTourinsoftSyndication::PREFIX . '_' . 'use_elementor_templates', false)) {
+            return array_map(static function ($syndication) {
+                return ['identifier' => 'elementor_template_'.$syndication['syndic_id'], 'label' => "Syndication ". $syndication['name'], 'type'=> 'input', 'input' => 'number'];
             }, SyndicationRepository::all());
         }
         return [];

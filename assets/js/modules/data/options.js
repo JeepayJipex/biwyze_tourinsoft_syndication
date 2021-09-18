@@ -6,6 +6,7 @@ export default () => {
       await this.getOptions()
     },
     optionsList: [],
+    optionsElementor: [],
     getBooleanValue(value) {
       return value !== '0'
     },
@@ -21,12 +22,24 @@ export default () => {
       })
       if(response) {
         alert('Options mises à jour avec succès')
-        await this.getOptions()
+        window.location.reload()
       }
     },
     async getOptions() {
-      this.optionsList = await sendRequest('tourinsoft/v1/options')
+      const response = await sendRequest('tourinsoft/v1/options')
+      this.optionsList = response.list
       this.optionsList = this.optionsList.map(option => ({...option, value: option.type === 'boolean' ? this.getBooleanValue(option.value) : option.value}))
+      this.optionsElementor = response.elementor
+      this.optionsElementor = this.optionsElementor.map(option => ({...option, value: option.type === 'boolean' ? this.getBooleanValue(option.value) : option.value}))
+    },
+    async saveElementorOptions() {
+      const response = await sendRequest('tourinsoft/v1/options', 'POST', {
+        options: this.transformOptionsValues(this.optionsElementor)
+      })
+      if(response) {
+        alert('Options mises à jour avec succès')
+        window.location.reload()
+      }
     }
   }))
 }

@@ -1,9 +1,10 @@
 <?php
 
 namespace BiwyzeTourinsoft\Controllers;
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
+
 use BiwyzeTourinsoft\Repositories\OptionsRepository;
 use BiwyzeTourinsoft\Repositories\SyncSyndicationRepository;
 use BiwyzeTourinsoft\Repositories\SyndicationRepository;
@@ -12,7 +13,7 @@ class TourinsoftOptionsController extends \WP_REST_Controller
 {
     public static function list(\WP_REST_Request $request): \WP_REST_Response
     {
-        return new \WP_REST_Response(OptionsRepository::allOptions(), 200);
+        return new \WP_REST_Response(['list' => OptionsRepository::allOptions(), 'elementor' => OptionsRepository::allOptions('elementor')], 200);
     }
 
     public static function register(\WP_REST_Request $request): \WP_REST_Response
@@ -52,10 +53,10 @@ class TourinsoftOptionsController extends \WP_REST_Controller
         OptionsRepository::saveOptions($options);
         SyndicationRepository::empty();
         foreach ($syndications as $syndication) {
-            $newSyndication = SyndicationRepository::store($syndication);
+            SyndicationRepository::store($syndication);
         }
-//        SyncSyndicationRepository::updateAll();
 
         return new \WP_REST_Response('done', 201);
     }
+
 }

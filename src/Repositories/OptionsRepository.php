@@ -40,12 +40,11 @@ class OptionsRepository
     /**
      * @return array
      */
-    public static function allOptions(): array
+    public static function allOptions($flag = 'list'): array
     {
         if (!function_exists('get_option')) return [];
 
-        $optionsList = Parser::get('options')['list'];
-        $optionsDefault = Parser::get('options')['defaults'];
+        $optionsList = Parser::get('options')[$flag];
         $options = [];
 
         foreach ($optionsList as $option) {
@@ -74,7 +73,6 @@ class OptionsRepository
         foreach($options as $option) {
             $optionName = esc_sql(BiwyzeTourinsoftSyndication::PREFIX . '_' . $option['identifier']);
             $optionValue = get_option($optionName);
-            $success = true;
             if($optionValue === $option['value']) continue;
             if($optionValue === null) {
                 if(!add_option($optionName, $option['value'])) $success = false;
