@@ -5,6 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 use BiwyzeTourinsoft\BiwyzeTourinsoftSyndication;
+use BiwyzeTourinsoft\Repositories\OptionsRepository;
+use BiwyzeTourinsoft\Repositories\SyndicationRepository;
 
 class Options
 {
@@ -22,7 +24,16 @@ class Options
                 'use_elementor_templates' => 0,
                 BiwyzeTourinsoftSyndication::TOURINSOFT_API_VERSION_OPTION => '3.0',
                 BiwyzeTourinsoftSyndication::CDT_OPTION => 'cdt31'
-            ]
+            ],
         ];
+    }
+
+    protected static function elementorFields () {
+        if (OptionsRepository::getOption('use_elementor_templates') === "1") {
+            return array_map(function ($syndication) {
+                return ['identifier' => 'use_elementor_template_number', 'label' => "Syndication ". $syndication['name'] . ": Numéro de template elementor", 'type'=> 'boolean'];
+            }, SyndicationRepository::all());
+        }
+        return [];
     }
 }

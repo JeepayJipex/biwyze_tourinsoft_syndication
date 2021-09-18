@@ -42,7 +42,7 @@ class BiwyzeTourinsoftSyndication
         (new Install())->checkDBUpdate();
     }
 
-    public static function is_compatible() {
+    public static function is_elementor_compatible() {
 
         // Check if Elementor installed and activated
         if ( ! did_action( 'elementor/loaded' ) ) {

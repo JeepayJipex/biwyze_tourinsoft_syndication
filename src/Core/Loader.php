@@ -59,7 +59,7 @@ class Loader
 
     public function register_widgets()
     {
-        if (BiwyzeTourinsoftSyndication::is_compatible()) {
+        if (BiwyzeTourinsoftSyndication::is_elementor_compatible()) {
             \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new CustomFieldText());
             \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new CustomFieldImages());
         }

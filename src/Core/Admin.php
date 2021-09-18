@@ -28,7 +28,7 @@ class Admin
             wp_enqueue_script('biwyze_tourinsoft_admin_js', plugins_url('biwyze_tourinsoft_syndication/assets/js/admin-bundle.js'), ['biwyze_tourinsoft_alpine_js', 'biwyze_tourinsoft_axios_js'], BiwyzeTourinsoftSyndication::VERSION);
             wp_localize_script('biwyze_tourinsoft_admin_js', 'biwyzeGlobals', [
                 'rest_url' => rest_url(),
-                'rest_nonce' => wp_create_nonce('wp_rest')
+                'rest_nonce' => wp_create_nonce('wp_rest'),
             ]);
         }
     }
