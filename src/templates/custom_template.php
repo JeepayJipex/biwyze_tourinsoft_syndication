@@ -5,8 +5,10 @@ $templateNumber = \BiwyzeTourinsoft\Repositories\OptionsRepository::getOption('e
 
 if(shortcode_exists('elementor-template')) {
     echo do_shortcode('[elementor-template id="' .$templateNumber. '"]');
-}else if(shortcode_exists('INSERT_ELEMENTOR')) {
+} else if(shortcode_exists('INSERT_ELEMENTOR')) {
     echo do_shortcode('[INSERT_ELEMENTOR id="' .$templateNumber. '"]');
+} else {
+    echo '<h3> Erreur lors du chargement du template elementor </h3>';
 }
 get_footer();
 ?>

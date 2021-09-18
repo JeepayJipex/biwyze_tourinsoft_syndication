@@ -15,7 +15,9 @@ class Admin
 
     public static function mainAdminPage()
     {
-        require_once BiwyzeTourinsoftSyndication::PLUGIN_DIR . '/src/Views/dashboard_home.php';
+        if(file_exists(BiwyzeTourinsoftSyndication::PLUGIN_DIR . '/src/Views/dashboard_home.php')) {
+            require_once BiwyzeTourinsoftSyndication::PLUGIN_DIR . '/src/Views/dashboard_home.php';
+        }
     }
 
     public static function addAdminAssets ($hook)
