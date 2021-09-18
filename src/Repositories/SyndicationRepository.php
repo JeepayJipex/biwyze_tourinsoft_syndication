@@ -32,9 +32,7 @@ class SyndicationRepository
     public static function store (array $data) {
         global $wpdb;
 
-        $wpdb->insert($wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE, array_merge($data, [
-            'created_at' => date('Y-m-d H:i:s')
-        ]));
+        $wpdb->insert($wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE, $data);
 
         $id = $wpdb->insert_id;
         return $wpdb->get_row('SELECT * FROM ' . $wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE . ' WHERE id = ' . $id . ';');
