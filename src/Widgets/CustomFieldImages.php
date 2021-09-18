@@ -4,27 +4,36 @@ namespace BiwyzeTourinsoft\Widgets;
 
 class CustomFieldImages extends \Elementor\Widget_Base
 {
-    public function get_name() {
+    public function get_name()
+    {
         return 'tourinsoft-custom-field-image';
     }
 
-    public function get_title() {
+    public function get_title()
+    {
         return 'Tourinsoft Images Grid ';
     }
 
-    public function get_icon() {
+    public function get_icon()
+    {
         return 'eicon-gallery-masonry';
     }
 
-    public function get_categories() {
+    public function get_categories()
+    {
         return ['tourinsoft'];
     }
 
-    public function get_script_depends() {}
+    public function get_script_depends()
+    {
+    }
 
-    public function get_style_depends() {}
+    public function get_style_depends()
+    {
+    }
 
-    protected function _register_controls() {
+    protected function _register_controls()
+    {
         $this->start_controls_section(
             'content_section',
             [
@@ -50,7 +59,7 @@ class CustomFieldImages extends \Elementor\Widget_Base
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'default' => 'flex',
                 'options' => [
-                    'flex'  => 'Grille',
+                    'flex' => 'Grille',
                 ],
                 'selectors' => [
                     '{{WRAPPER}} .images' => 'display: {{VALUE}}; flex-wrap: wrap; justify-content: center;',
@@ -68,7 +77,7 @@ class CustomFieldImages extends \Elementor\Widget_Base
                         'max' => 12,
                     ],
                 ],
-                'devices' => [ 'desktop', 'tablet', 'mobile' ],
+                'devices' => ['desktop', 'tablet', 'mobile'],
                 'desktop_default' => [
                     'size' => 4,
                     'unit' => 'colonnes',
@@ -106,7 +115,7 @@ class CustomFieldImages extends \Elementor\Widget_Base
             [
                 'label' => 'Espace entre les éléments',
                 'type' => \Elementor\Controls_Manager::SLIDER,
-                'size_units' => [ 'px', '%' ],
+                'size_units' => ['px', '%'],
                 'range' => [
                     'px' => [
                         'min' => 0,
@@ -131,25 +140,28 @@ class CustomFieldImages extends \Elementor\Widget_Base
         $this->end_controls_section();
     }
 
-    protected function render() {
+    protected function render()
+    {
         $settings = $this->get_settings_for_display();
-        $metaValue = get_post_meta(get_the_ID(), $settings['field_name']);
+        $metaValue = get_post_meta(get_the_ID(), $settings['field_name'], true);
         ?>
         <div class="images">
             <?php
-                if(!$metaValue || (is_array($metaValue) && count($metaValue) === 0)):
-                    for($i = 0; $i< 12 ; $i++):
-            ?>
-                <div class="image" >
-                    <div style="background-size: cover!important;width: 100%; height: 100%; background: url('https://via.placeholder.com/<?= rand(150, 400)?>') center no-repeat;"></div>
-                </div>
-            <?php endfor;
-                else:
-                    foreach($metaValue as $image):
-            ?>
-                <img src="<?= $image[0] ?? "https://via.placeholder.com/150" ?>" alt="<?= $image[1] ?? ''?>">
-            <?php endforeach; endif;?>
+            if (!$metaValue || (is_array($metaValue) && count($metaValue) === 0)):
+                for ($i = 0; $i < 12; $i++):
+                    ?>
+                    <div class="image">
+                        <div style="background-size: cover!important;width: 100%; height: 100%; background: url('https://via.placeholder.com/<?= rand(150, 400) ?>') center no-repeat;"></div>
+                    </div>
+                <?php endfor;
+            else:
+                foreach ($metaValue as $image):
+                    ?>
+                    <div class="image">
+                        <div style="background-size: cover!important;width: 100%; height: 100%; background: url('<?= $image[0] ?? "https://via.placeholder.com/150" ?>') center no-repeat;"></div>
+                    </div>
+                <?php endforeach; endif; ?>
         </div>
-            <?php
+        <?php
     }
 }

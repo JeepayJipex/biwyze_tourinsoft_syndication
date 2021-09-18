@@ -6,7 +6,9 @@ if (!defined('ABSPATH')) {
 }
 
 use BiwyzeTourinsoft\BiwyzeTourinsoftSyndication;
+use BiwyzeTourinsoft\Handlers\ACF\FieldsGroupCreator;
 use BiwyzeTourinsoft\Handlers\CustomPostType;
+use BiwyzeTourinsoft\Handlers\SyndicationReader;
 use BiwyzeTourinsoft\Repositories\OptionsRepository;
 use BiwyzeTourinsoft\Repositories\SyncSyndicationRepository;
 use BiwyzeTourinsoft\Repositories\SyndicationRepository;
@@ -15,6 +17,10 @@ use BiwyzeTourinsoft\Widgets\CustomFieldText;
 
 class Loader
 {
+    public function __construct()
+    {
+        $this->syndications = SyndicationRepository::all();
+    }
 
     public function load()
     {
@@ -25,6 +31,7 @@ class Loader
         add_action('elementor/widgets/widgets_registered', [$this, 'register_widgets']);
         add_action( 'elementor/elements/categories_registered', [$this, 'add_elementor_widget_categories'] );
         add_filter('single_template', [$this, 'custom_elementor_template']);
+        add_action('acf/init', [$this, 'loadAcfFields']);
 
     }
 
@@ -53,7 +60,7 @@ class Loader
 
         $syndicationsNames = array_map(static function ($syndication) {
             return sanitize_title($syndication['name']);
-        }, SyndicationRepository::all());
+        }, $this->syndications);
 
         (new CustomPostType($syndicationsNames))->generateCustomPostTypes();
     }
@@ -95,5 +102,13 @@ class Loader
             }
         }
         return $single;
+    }
+
+    public function loadAcfFields()
+    {
+        foreach ($this->syndications as $syndication) {
+            $fields = (new SyndicationReader($syndication['syndic_id'], $syndication['name']))->getParsedOffers()[0];
+            FieldsGroupCreator::createSyndicationFieldGroup($syndication, $fields);
+        }
     }
 }

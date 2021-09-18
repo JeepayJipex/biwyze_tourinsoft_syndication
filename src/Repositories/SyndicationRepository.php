@@ -10,8 +10,13 @@ class SyndicationRepository
 {
     static public function all()
     {
-        global $wpdb;
-        return $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE, ARRAY_A);
+        try {
+            global $wpdb;
+            return $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE, ARRAY_A);
+        } catch (\Exception $exception) {
+            var_dump($exception->getMessage());
+            return [];
+        }
     }
 
     public static function get(int $id)
