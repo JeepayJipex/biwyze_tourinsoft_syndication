@@ -6,7 +6,7 @@ class FieldResolver
 {
     public static function getFeaturedImageUrl(string $fieldName, int $postId)
     {
-        $field = get_post_meta($fieldName, $postId);
+        $field = get_post_meta($postId, $fieldName, true);
 
         if (!$field) return '#';
         if (!is_array($field)) return $field;

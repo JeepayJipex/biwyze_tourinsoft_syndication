@@ -80,7 +80,7 @@ class SyndicationPostCreator
         foreach($offer as $key => $value) {
             add_post_meta($id, $key, $value);
         }
-        add_post_meta($id, 'syndication_number', sanitize_title($this->syndication['name']) . '_' . $this->syndication['syndic_id'] . '_' . $this->syndication['category_id']);
+        add_post_meta($id, 'syndication_info', ['name' => $this->syndication['name'], 'syndic_id' => $this->syndication['syndic_id'] , 'category_id' => $this->syndication['category_id']]);
         return true;
     }
 }

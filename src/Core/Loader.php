@@ -24,6 +24,7 @@ class Loader
         add_action('init', [$this, 'registerCustomPostTypes']);
         add_action('elementor/widgets/widgets_registered', [$this, 'register_widgets']);
         add_action( 'elementor/elements/categories_registered', [$this, 'add_elementor_widget_categories'] );
+        add_filter('single_template', [$this, 'custom_elementor_template']);
 
     }
 
@@ -80,5 +81,19 @@ class Loader
     public function executeTourinsoftCrons()
     {
         add_action('cron_tourinsoft', [SyncSyndicationRepository::class, 'updateAll']);
+    }
+
+    public function custom_elementor_template($single) {
+        global $post;
+
+        $syndicationInfo = get_post_meta($post->ID, 'syndication_info', true);
+        $templateNumber = \BiwyzeTourinsoft\Repositories\OptionsRepository::getOption('elementor_template_'.$syndicationInfo['syndic_id']);
+
+        if($templateNumber) {
+            if(file_exists(WP_PLUGIN_DIR . '/biwyze_tourinsoft_syndication/src/templates/custom_template.php')) {
+                return WP_PLUGIN_DIR . '/biwyze_tourinsoft_syndication/src/templates/custom_template.php';
+            }
+        }
+        return $single;
     }
 }
