@@ -14,7 +14,7 @@ use BiwyzeTourinsoft\Repositories\SyndicationRepository;
 class BiwyzeTourinsoftSyndication
 {
     const VERSION = "1.0.0";
-    const DB_VERSION = "1.1";
+    const DB_VERSION = "1.1.1";
     const PREFIX = "biwyze_ts";
     const PLUGIN_NAME = 'Biwyze Tourinsoft Syndication';
 
