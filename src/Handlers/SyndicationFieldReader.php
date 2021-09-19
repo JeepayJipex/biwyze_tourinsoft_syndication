@@ -28,7 +28,7 @@ class SyndicationFieldReader
         return array_map(function ($value) {
             $arrayValue = explode('|', $value);
             return array_filter($arrayValue, function ($value) {
-                return $value !== '';
+                return $value !== '' ;
             });
         }, $values);
     }

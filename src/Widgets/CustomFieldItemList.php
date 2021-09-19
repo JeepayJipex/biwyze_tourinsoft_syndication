@@ -127,7 +127,7 @@ class CustomFieldItemList extends \Elementor\Widget_Base
             <hr>
             <ul>
                 <?php foreach ($metaValue as $element): ?>
-                    <li class="element"><?php echo str_replace(['\n'], ['<br/>'],$element); ?></li>
+                    <li class="element"><?php echo str_replace("\n", '<br/>', $element); ?></li>
                 <?php endforeach; ?>
             </ul>
         </div>

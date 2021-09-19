@@ -151,14 +151,14 @@ class CustomFieldImages extends \Elementor\Widget_Base
                 for ($i = 0; $i < 12; $i++):
                     ?>
                     <div class="image">
-                        <a href="https://via.placeholder.com/<?= rand(150, 400) ?>" style="display:block; background-size: cover!important;width: 100%; height: 100%; background: url('https://via.placeholder.com/<?= rand(150, 400) ?>') center no-repeat;"></a>
+                        <a target="_blank" href="https://via.placeholder.com/<?= rand(150, 400) ?>" style="display:block; background-size: cover!important;width: 100%; height: 100%; background: url('https://via.placeholder.com/<?= rand(150, 400) ?>') center no-repeat;"></a>
                     </div>
                 <?php endfor;
             else:
                 foreach ($metaValue as $image):
                     ?>
                     <div class="image">
-                        <a href="<?= $image[0] ?? "https://via.placeholder.com/150" ?>" style="display: block; background-size: cover!important;width: 100%; height: 100%; background: url('<?= $image[0] ?? "https://via.placeholder.com/150" ?>') center no-repeat;"></a>
+                        <a target="_blank" href="<?= $image[0] ?? "https://via.placeholder.com/150" ?>" style="display: block; background-size: cover!important;width: 100%; height: 100%; background: url('<?= $image[0] ?? "https://via.placeholder.com/150" ?>') center no-repeat;"></a>
                     </div>
                 <?php endforeach; endif; ?>
         </div>

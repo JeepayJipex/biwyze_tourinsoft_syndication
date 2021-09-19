@@ -6,8 +6,11 @@ export default () => {
       Alpine.store('main').toggleLoading();
       this.syndications = await sendRequest('tourinsoft/v1/syndication') || [];
       this.categories = await this.fetchCategories()
+      console.log(this.categories)
       this.orderedPostTypes = await sendRequest('wp/v2/types') || [];
-      this.newSyndication.category_id = this.categories[0]?.id || '';
+      if(this.categories && this.categories.length) {
+        this.newSyndication.category_id = this.categories[0]?.id;
+      }
       this.newSyndication.associated_post_type = this.postTypes[0]?.slug || '';
       this.categories.forEach(cat => {
         this.orderedCategories[cat.id] = cat;
@@ -84,8 +87,8 @@ export default () => {
           const  data = await sendRequest('wp/v2/categories', 'GET', {}, { per_page: CATEGORIES_PER_PAGE, page: i + 1 });
           categories = [...categories, ...data]
         }
-        return categories
       }
+      return categories
     },
     async updateSyndication () {
       Alpine.store('main').toggleLoading();
