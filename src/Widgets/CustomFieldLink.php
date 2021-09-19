@@ -119,6 +119,6 @@ class CustomFieldLink extends \Elementor\Widget_Base
         $type = $settings['link_type'];
         $types = ["link" => '', "mail" => "mailto:", "phone" => "tel:"];
         if($metaValue === '') $metaValue = '#';
-        echo '<a class="text" href="'. $types[$type]?? '' . $metaValue .'">'. $label !== '' ? $label : $metaValue . '</a>';
+        echo '<a class="text" href="'. $types[$type] ?? '' . $metaValue .'">'. $label !== '' ? $label : $metaValue . '</a>';
     }
 }
