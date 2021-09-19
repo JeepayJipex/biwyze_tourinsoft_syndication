@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "rollup assets/js/main.js --config rollup.config.js",
-    "watch": "rollup assets/js/main.js --config rollup.config.js --watch"
+    "watch": "rollup assets/js/main.js --config rollup.config.js --watch",
+    "build": "rm -f ./release && mkdir -p release && zip -r ./release/biwyze_tourinsoft_syndication . "
   }
-
 }
