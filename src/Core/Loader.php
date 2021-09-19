@@ -13,6 +13,7 @@ use BiwyzeTourinsoft\Repositories\OptionsRepository;
 use BiwyzeTourinsoft\Repositories\SyncSyndicationRepository;
 use BiwyzeTourinsoft\Repositories\SyndicationRepository;
 use BiwyzeTourinsoft\Widgets\CustomFieldImages;
+use BiwyzeTourinsoft\Widgets\CustomFieldItemList;
 use BiwyzeTourinsoft\Widgets\CustomFieldLink;
 use BiwyzeTourinsoft\Widgets\CustomFieldText;
 
@@ -72,6 +73,7 @@ class Loader
             \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new CustomFieldText());
             \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new CustomFieldImages());
             \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new CustomFieldLink());
+            \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new CustomFieldItemList());
         }
 
     }
