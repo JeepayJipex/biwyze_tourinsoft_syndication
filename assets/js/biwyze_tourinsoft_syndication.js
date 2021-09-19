@@ -5,21 +5,30 @@
     return a.localeCompare(b)
   }
 
-  async function sendRequest (url, method = 'GET', body = {}, headers = {}) {
-    const baseHeaders = {
+  function generateHeaders (headers) {
+    return {
       'X-WP-Nonce': biwyzeGlobals.rest_nonce,
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       ...headers
-    };
+    }
+  }
+
+  function generateRequestObject (url, method, baseHeaders, body, params) {
+    return {
+      url: biwyzeGlobals.rest_url + url,
+      method,
+      headers: baseHeaders,
+      data: body,
+      params
+    }
+  }
+
+  async function sendRequest (url, method = 'GET', body = {}, params = {}, headers = {}, returnType = 'data') {
+    const baseHeaders = generateHeaders(headers);
     try {
-      const {data} = await axios({
-        url: biwyzeGlobals.rest_url + url,
-        method,
-        headers: baseHeaders,
-        data: body
-      });
-      return data
+      const response = await axios(generateRequestObject(url, method, baseHeaders, body, params));
+      return returnType === 'data' ? response.data : response
     } catch (e) {
       alert('Erreur lors du traitement de cette opération' + e.message);
       return null
@@ -31,7 +40,7 @@
       async init () {
         Alpine.store('main').toggleLoading();
         this.syndications = await sendRequest('tourinsoft/v1/syndication') || [];
-        this.categories = await sendRequest('wp/v2/categories') || [];
+        this.categories = await sendRequest('wp/v2/categories', 'GET', {}, { per_page: 100 }) || [];
         this.orderedPostTypes = await sendRequest('wp/v2/types') || [];
         this.newSyndication.category_id = this.categories[0]?.id || '';
         this.newSyndication.associated_post_type = this.postTypes[0]?.slug || '';
