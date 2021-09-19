@@ -35,12 +35,13 @@
     }
   }
 
+  const CATEGORIES_PER_PAGE = 10;
   var syndications = () => {
     Alpine.data('syndications', () => ({
       async init () {
         Alpine.store('main').toggleLoading();
         this.syndications = await sendRequest('tourinsoft/v1/syndication') || [];
-        this.categories = await sendRequest('wp/v2/categories', 'GET', {}, { per_page: 100 }) || [];
+        this.categories = await this.fetchCategories();
         this.orderedPostTypes = await sendRequest('wp/v2/types') || [];
         this.newSyndication.category_id = this.categories[0]?.id || '';
         this.newSyndication.associated_post_type = this.postTypes[0]?.slug || '';
@@ -106,6 +107,21 @@
         };
         this.updating = false;
         this.updatingId = null;
+      },
+      async fetchCategories() {
+        let categories = [];
+        let { headers, data } = await sendRequest('wp/v2/categories', 'GET', {}, { per_page: CATEGORIES_PER_PAGE }, {}, 'all');
+        if(data && Array.isArray(data)) {
+          categories = [...categories, ...data];
+        }
+        const totalPages = headers['X-WP-TotalPages'] ?? headers['x-wp-totalpages'];
+        if(totalPages > 1) {
+          for(let i = 1; i < totalPages; i++) {
+            const  data = await sendRequest('wp/v2/categories', 'GET', {}, { per_page: CATEGORIES_PER_PAGE, page: i + 1 });
+            categories = [...categories, ...data];
+          }
+          return categories
+        }
       },
       async updateSyndication () {
         Alpine.store('main').toggleLoading();
