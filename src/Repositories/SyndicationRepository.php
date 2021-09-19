@@ -29,7 +29,6 @@ class SyndicationRepository
     {
         global $wpdb;
 
-        $data['updated_at'] = date('Y-m-d H:i:s');
         $wpdb->update($wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE, $data, ['id' =>$id]);
         return $wpdb->get_row('SELECT * FROM ' . $wpdb->prefix . BiwyzeTourinsoftSyndication::SYNDICATIONS_TABLE . ' WHERE id = ' . $id . ';');
     }

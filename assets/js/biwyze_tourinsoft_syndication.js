@@ -35,7 +35,7 @@
     }
   }
 
-  const CATEGORIES_PER_PAGE = 10;
+  const CATEGORIES_PER_PAGE = 50;
   var syndications = () => {
     Alpine.data('syndications', () => ({
       async init () {

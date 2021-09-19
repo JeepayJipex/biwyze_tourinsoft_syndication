@@ -1,5 +1,5 @@
 import {sendRequest, sortStrings} from '../helpers'
-const CATEGORIES_PER_PAGE = 10
+const CATEGORIES_PER_PAGE = 50
 export default () => {
   Alpine.data('syndications', () => ({
     async init () {
