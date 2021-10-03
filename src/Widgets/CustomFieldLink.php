@@ -65,7 +65,7 @@ class CustomFieldLink extends \Elementor\Widget_Base
                     'right'  => 'Droite',
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .text' => 'text-align: {{VALUE}}',
+                    '{{WRAPPER}}' => 'text-align: {{VALUE}}',
                 ],
             ]
         );
@@ -115,10 +115,19 @@ class CustomFieldLink extends \Elementor\Widget_Base
     protected function render() {
         $settings = $this->get_settings_for_display();
         $metaValue = get_post_meta(get_the_ID(), $settings['field_name'], true);
-        $label = $settings['link_label'];
+
         $type = $settings['link_type'];
         $types = ["link" => '', "mail" => "mailto:", "phone" => "tel:"];
+
+        if(is_string($metaValue) && $type === 'link') {
+            $metaValue = 'https://' . str_replace(['http://', 'https://', 'www.'],['', '', ''],$metaValue);
+        }
+        $label = $settings['link_label'];
+        $display = (isset($label) && $label !== '') ? $label : $metaValue;
+
         if($metaValue === '') $metaValue = '#';
-        echo '<a class="text" href="'. $types[$type] ?? '' . $metaValue .'">'. $label !== '' ? $label : $metaValue . '</a>';
+        ?>
+        <a class="text" target="_blank" href="<?= $types[$type] . $metaValue ?>"><?= $display ?></a>
+        <?php
     }
 }

@@ -31,7 +31,7 @@ class Loader
         $this->executeTourinsoftCrons();
         add_action('init', [$this, 'registerCustomPostTypes']);
         add_action('elementor/widgets/widgets_registered', [$this, 'register_widgets']);
-        add_action( 'elementor/elements/categories_registered', [$this, 'add_elementor_widget_categories'] );
+        add_action('elementor/elements/categories_registered', [$this, 'add_elementor_widget_categories']);
         add_filter('single_template', [$this, 'custom_elementor_template']);
         add_action('acf/init', [$this, 'loadAcfFields']);
 
@@ -78,7 +78,8 @@ class Loader
 
     }
 
-    function add_elementor_widget_categories( $elements_manager ) {
+    function add_elementor_widget_categories($elements_manager)
+    {
 
         $elements_manager->add_category(
             'tourinsoft',
@@ -94,14 +95,15 @@ class Loader
         add_action('cron_tourinsoft', [SyncSyndicationRepository::class, 'updateAll']);
     }
 
-    public function custom_elementor_template($single) {
+    public function custom_elementor_template($single)
+    {
         global $post;
 
         $syndicationInfo = get_post_meta($post->ID, 'syndication_info', true);
-        $templateNumber = \BiwyzeTourinsoft\Repositories\OptionsRepository::getOption('elementor_template_'.$syndicationInfo['syndic_id']);
+        $templateNumber = \BiwyzeTourinsoft\Repositories\OptionsRepository::getOption('elementor_template_' . $syndicationInfo['syndic_id']);
 
-        if($templateNumber) {
-            if(file_exists(WP_PLUGIN_DIR . '/biwyze_tourinsoft_syndication/src/templates/custom_template.php')) {
+        if ($templateNumber) {
+            if (file_exists(WP_PLUGIN_DIR . '/biwyze_tourinsoft_syndication/src/templates/custom_template.php')) {
                 return WP_PLUGIN_DIR . '/biwyze_tourinsoft_syndication/src/templates/custom_template.php';
             }
         }
@@ -112,7 +114,9 @@ class Loader
     {
         foreach ($this->syndications as $syndication) {
             $fields = (new SyndicationReader($syndication['syndic_id'], $syndication['name']))->getParsedOffers()[0];
-            FieldsGroupCreator::createSyndicationFieldGroup($syndication, $fields);
+            if (isset($fields) && is_array($fields)) {
+                FieldsGroupCreator::createSyndicationFieldGroup($syndication, $fields);
+            }
         }
     }
 }

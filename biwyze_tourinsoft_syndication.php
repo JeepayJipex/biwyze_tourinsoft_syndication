@@ -6,6 +6,8 @@ Description: Plugin pour l'intégration d'offres présentes sur Tourinsoft à vo
 Version: 1.0
 Author: Jean Mariette
 Author URI: https://biwyze.fr
+Requires PHP: 7.0
+Requires at least: 5.8.1
 License: propriétaire
 */
 

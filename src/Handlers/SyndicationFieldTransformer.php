@@ -12,7 +12,7 @@ class SyndicationFieldTransformer
 
         if(!method_exists(__CLASS__, strtolower($fieldKey))) {
             $transformedField =  array_map(function($value) {
-                return implode('\n', $value);
+                return implode('<br />', $value);
             }, $fieldValue);
 
             if(count($transformedField) === 1) {

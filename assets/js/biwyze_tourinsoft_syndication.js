@@ -42,7 +42,6 @@
         Alpine.store('main').toggleLoading();
         this.syndications = await sendRequest('tourinsoft/v1/syndication') || [];
         this.categories = await this.fetchCategories();
-        console.log(this.categories);
         this.orderedPostTypes = await sendRequest('wp/v2/types') || [];
         if(this.categories && this.categories.length) {
           this.newSyndication.category_id = this.categories[0]?.id;
@@ -165,6 +164,7 @@
       currentSyndication: {},
       async getCurrentSyndication (id) {
         this.currentSyndication = await sendRequest('tourinsoft/v1/syndication/' + id);
+        console.log(this.currentSyndication);
       },
       getCurrentSyndicationFields () {
         return Object.keys(this.currentSyndication?.offers?.raw[0] || []).sort(sortStrings)
@@ -205,8 +205,8 @@
         if (typeof name !== 'string' || name === '') return false
         if (typeof associated_post_type !== 'string' || associated_post_type === '') return false
         if (typeof syndic_id !== 'string' || syndic_id === '') return false
-        if (!category_id || Number.isNaN(parseInt(category_id, 10))) return false
-        return true
+        return !(!category_id || Number.isNaN(parseInt(category_id, 10)));
+
       }
     }));
   };

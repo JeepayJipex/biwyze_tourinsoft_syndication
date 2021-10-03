@@ -20,7 +20,7 @@ class SyndicationPostDeleter
     {
         if (function_exists('get_posts')) {
             return get_posts([
-                'post_type' => sanitize_title($this->syndication['name']),
+                'post_type' => $this->syndication['associated_post_type'],
                 'meta_query' => [
                     'key' => 'syndication_number',
                     'value' => sanitize_title($this->syndication['name']) . '_' . $this->syndication['syndic_id'] . '_' . $this->syndication['category_id'],
